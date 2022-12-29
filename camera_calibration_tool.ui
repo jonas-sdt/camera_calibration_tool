@@ -1,0 +1,1074 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1488</width>
+    <height>919</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Camera Calibration Tool</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../../srd_tools/camera_calibration_tool/data/camera_icon.svg</normaloff>../../srd_tools/camera_calibration_tool/data/camera_icon.svg</iconset>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <property name="tabShape">
+   <enum>QTabWidget::Rounded</enum>
+  </property>
+  <property name="dockNestingEnabled">
+   <bool>false</bool>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="1">
+     <layout class="QHBoxLayout" name="horizontalLayout_central">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetDefaultConstraint</enum>
+      </property>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_left">
+        <item>
+         <widget class="QTabWidget" name="tabWidget_source">
+          <property name="maximumSize">
+           <size>
+            <width>350</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="currentIndex">
+           <number>1</number>
+          </property>
+          <widget class="QWidget" name="FromCameraTab">
+           <attribute name="title">
+            <string>FromCamera</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_9">
+            <item row="0" column="0">
+             <layout class="QVBoxLayout" name="verticalLayout_capture">
+              <item>
+               <widget class="QGroupBox" name="groupBox_2">
+                <property name="title">
+                 <string>Camera</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_2">
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="horizontalSpacing">
+                  <number>6</number>
+                 </property>
+                 <property name="verticalSpacing">
+                  <number>0</number>
+                 </property>
+                 <item row="0" column="0">
+                  <widget class="QComboBox" name="comboBox_camera">
+                   <property name="statusTip">
+                    <string>Choose a camera</string>
+                   </property>
+                   <property name="whatsThis">
+                    <string>hello</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QPushButton" name="pushButton_camera_search">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>23</height>
+                    </size>
+                   </property>
+                   <property name="statusTip">
+                    <string>Refresh cameras</string>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset>
+                     <normaloff>../../srd_tools/camera_calibration_tool/data/refresh_icon.svg</normaloff>../../srd_tools/camera_calibration_tool/data/refresh_icon.svg</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="groupBox_4">
+                <property name="title">
+                 <string>Save Images</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_10">
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="horizontalSpacing">
+                  <number>6</number>
+                 </property>
+                 <property name="verticalSpacing">
+                  <number>0</number>
+                 </property>
+                 <item row="0" column="0" alignment="Qt::AlignHCenter">
+                  <widget class="QCheckBox" name="checkBox_save_images">
+                   <property name="maximumSize">
+                    <size>
+                     <width>23</width>
+                     <height>23</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="2">
+                  <widget class="QLineEdit" name="lineEdit_path">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>200</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="statusTip">
+                    <string>Path to folder images will be saved to</string>
+                   </property>
+                   <property name="whatsThis">
+                    <string>hello</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="3">
+                  <widget class="QPushButton" name="pushButton_path_window">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>100</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="statusTip">
+                    <string>Open folder selection dialog</string>
+                   </property>
+                   <property name="text">
+                    <string>Select path</string>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>0</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="groupBox_5">
+                <property name="title">
+                 <string>Autotimer</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_11">
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item row="2" column="0">
+                  <widget class="QPushButton" name="pushButton_start_autotimer">
+                   <property name="text">
+                    <string>Start Auto Capture</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="label_delay_seconds">
+                   <property name="text">
+                    <string>Delay:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="label_img_no">
+                   <property name="text">
+                    <string>Number of Images:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QProgressBar" name="progressBar_img_cnt">
+                   <property name="maximumSize">
+                    <size>
+                     <width>100</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="maximum">
+                    <number>20</number>
+                   </property>
+                   <property name="value">
+                    <number>0</number>
+                   </property>
+                   <property name="format">
+                    <string>%v</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QSpinBox" name="spinBox_delay_seconds">
+                   <property name="maximumSize">
+                    <size>
+                     <width>100</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                   <property name="buttonSymbols">
+                    <enum>QAbstractSpinBox::UpDownArrows</enum>
+                   </property>
+                   <property name="suffix">
+                    <string>s</string>
+                   </property>
+                   <property name="minimum">
+                    <number>5</number>
+                   </property>
+                   <property name="maximum">
+                    <number>60</number>
+                   </property>
+                   <property name="singleStep">
+                    <number>5</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QSpinBox" name="spinBox_img_no">
+                   <property name="minimumSize">
+                    <size>
+                     <width>50</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>100</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="statusTip">
+                    <string>Select number of images to take</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="groupBox_6">
+                <property name="title">
+                 <string>ManualCapture</string>
+                </property>
+                <layout class="QHBoxLayout" name="_2">
+                 <item>
+                  <widget class="QPushButton" name="pushButton_capture">
+                   <property name="statusTip">
+                    <string>Capture image (if &gt;Save Images&lt; is activated this will automatically save the image to the specified path)</string>
+                   </property>
+                   <property name="text">
+                    <string>Capture</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="FromFileTab">
+           <attribute name="title">
+            <string>From Files</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_8">
+            <item row="0" column="0">
+             <layout class="QHBoxLayout" name="horizontalLayout">
+              <property name="sizeConstraint">
+               <enum>QLayout::SetMinimumSize</enum>
+              </property>
+              <item>
+               <widget class="QCheckBox" name="checkBox_use_saved_images">
+                <property name="statusTip">
+                 <string>Open already taken images for the calibration</string>
+                </property>
+                <property name="text">
+                 <string>Open from files</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_select_images">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="statusTip">
+                 <string>Select image files for the calibration</string>
+                </property>
+                <property name="text">
+                 <string>Select files</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="1" column="0">
+             <spacer name="verticalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox_images">
+          <property name="maximumSize">
+           <size>
+            <width>350</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="title">
+           <string>Images</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_5">
+           <item row="3" column="0">
+            <widget class="QListWidget" name="listWidget_imgs">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_delete_buttons">
+             <item>
+              <widget class="QPushButton" name="pushButton_delete_last">
+               <property name="text">
+                <string>Delete Last</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_delete_all">
+               <property name="text">
+                <string>Delete All</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="groupBox_Video">
+        <property name="statusTip">
+         <string/>
+        </property>
+        <property name="title">
+         <string>Video</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_4">
+         <item row="0" column="1">
+          <widget class="QLabel" name="cameraView">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>1280</width>
+             <height>1280</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_right">
+        <item>
+         <widget class="QGroupBox" name="groupBox_chessboard">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>350</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="title">
+           <string>Chessboard Specification</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_3">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item row="1" column="0">
+            <layout class="QVBoxLayout" name="verticalLayout_chessboard"/>
+           </item>
+           <item row="0" column="0">
+            <widget class="QTabWidget" name="tabWidget_calibration">
+             <property name="currentIndex">
+              <number>1</number>
+             </property>
+             <widget class="QWidget" name="tab_chessboard">
+              <attribute name="title">
+               <string>Chessboard</string>
+              </attribute>
+              <layout class="QGridLayout" name="gridLayout_12">
+               <item row="0" column="0">
+                <layout class="QGridLayout" name="gridLayout_chessboard">
+                 <item row="1" column="3">
+                  <layout class="QHBoxLayout" name="horizontalLayout_7">
+                   <item>
+                    <spacer name="horizontalSpacer_5">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QDoubleSpinBox" name="doubleSpinBox_sqare_size">
+                     <property name="suffix">
+                      <string> cm</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="label_square_size">
+                   <property name="text">
+                    <string>Square Size:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="label_square_no">
+                   <property name="text">
+                    <string>Number of Squares (h x v):</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="3">
+                  <layout class="QHBoxLayout" name="horizontalLayout_8">
+                   <item>
+                    <spacer name="horizontalSpacer_4">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QSpinBox" name="spinBox_chessboard_no_squares_h"/>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_x">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="text">
+                      <string>x</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QSpinBox" name="spinBox_chessboard_no_squares_v"/>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="tab_charuco">
+              <attribute name="title">
+               <string>Charuco</string>
+              </attribute>
+              <layout class="QGridLayout" name="gridLayout_13">
+               <item row="0" column="0">
+                <widget class="QLabel" name="label">
+                 <property name="text">
+                  <string>Sqare size</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_3">
+                 <property name="text">
+                  <string>Number of Markers (h x v)</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <layout class="QHBoxLayout" name="horizontalLayout_2">
+                 <item>
+                  <spacer name="horizontalSpacer">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QSpinBox" name="spinBox_charuco_no_markers_h"/>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_2">
+                   <property name="text">
+                    <string>x</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QSpinBox" name="spinBox_charuco_no_markers_v"/>
+                 </item>
+                </layout>
+               </item>
+               <item row="3" column="1">
+                <widget class="QComboBox" name="comboBox_marker_dict">
+                 <property name="currentText">
+                  <string/>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>DICT_4X4_50</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>DICT_4X4_100</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>DICT_4X4_250</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>DICT_4X4_1000</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>DICT_5X5_50</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>DICT_5X5_100</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>DICT_5X5_250</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>DICT_5X5_1000</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>DICT_6X6_50</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>DICT_6X6_100</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>DICT_6X6_250</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>DICT_6X6_1000</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>DICT_7X7_50</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>DICT_7X7_100</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>DICT_7X7_250</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>DICT_7X7_1000</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="label_4">
+                 <property name="text">
+                  <string>Marker Dictionary</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <layout class="QHBoxLayout" name="horizontalLayout_3">
+                 <item>
+                  <spacer name="horizontalSpacer_2">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBox_marker_size">
+                   <property name="suffix">
+                    <string> cm</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox_calibration">
+          <property name="maximumSize">
+           <size>
+            <width>350</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="title">
+           <string>Calibration</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_7">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item row="0" column="0">
+            <layout class="QVBoxLayout" name="verticalLayout_calibration">
+             <item>
+              <widget class="QPushButton" name="pushButton_determ_param">
+               <property name="statusTip">
+                <string>Calculate camera paramters from calibration images</string>
+               </property>
+               <property name="text">
+                <string>Calculate Parameters</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTableWidget" name="tableWidget_parameters">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>291</height>
+                </size>
+               </property>
+               <property name="accessibleDescription">
+                <string>hello</string>
+               </property>
+               <property name="selectionMode">
+                <enum>QAbstractItemView::SingleSelection</enum>
+               </property>
+               <property name="gridStyle">
+                <enum>Qt::SolidLine</enum>
+               </property>
+               <attribute name="horizontalHeaderCascadingSectionResizes">
+                <bool>false</bool>
+               </attribute>
+               <attribute name="horizontalHeaderDefaultSectionSize">
+                <number>280</number>
+               </attribute>
+               <attribute name="horizontalHeaderStretchLastSection">
+                <bool>false</bool>
+               </attribute>
+               <row>
+                <property name="text">
+                 <string>f</string>
+                </property>
+               </row>
+               <row>
+                <property name="text">
+                 <string>s_x</string>
+                </property>
+               </row>
+               <row>
+                <property name="text">
+                 <string>s_y</string>
+                </property>
+               </row>
+               <row>
+                <property name="text">
+                 <string>c_x</string>
+                </property>
+               </row>
+               <row>
+                <property name="text">
+                 <string>c_y</string>
+                </property>
+               </row>
+               <row>
+                <property name="text">
+                 <string>k_1</string>
+                </property>
+               </row>
+               <row>
+                <property name="text">
+                 <string>k_2</string>
+                </property>
+               </row>
+               <row>
+                <property name="text">
+                 <string>R</string>
+                </property>
+               </row>
+               <row>
+                <property name="text">
+                 <string>t</string>
+                </property>
+               </row>
+               <column>
+                <property name="text">
+                 <string>Value</string>
+                </property>
+               </column>
+               <item row="0" column="0">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="flags">
+                 <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+                </property>
+               </item>
+               <item row="1" column="0">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="flags">
+                 <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+                </property>
+               </item>
+               <item row="2" column="0">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="flags">
+                 <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+                </property>
+               </item>
+               <item row="3" column="0">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="flags">
+                 <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+                </property>
+               </item>
+               <item row="4" column="0">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="flags">
+                 <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+                </property>
+               </item>
+               <item row="5" column="0">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="flags">
+                 <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+                </property>
+               </item>
+               <item row="6" column="0">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="flags">
+                 <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+                </property>
+               </item>
+               <item row="7" column="0">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="flags">
+                 <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+                </property>
+               </item>
+               <item row="8" column="0">
+                <property name="flags">
+                 <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_save_param">
+               <property name="statusTip">
+                <string>Save camera parameters as a .yaml file.</string>
+               </property>
+               <property name="text">
+                <string>Save Parameters</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>../../srd_tools/camera_calibration_tool/data/save_icon.svg</normaloff>../../srd_tools/camera_calibration_tool/data/save_icon.svg</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_bottom">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox_preview">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>350</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="title">
+           <string>Preview</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_6">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QCheckBox" name="checkBox_preview_calibration">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="statusTip">
+              <string>Preview calibrated camera image</string>
+             </property>
+             <property name="text">
+              <string>Preview Calibration</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
