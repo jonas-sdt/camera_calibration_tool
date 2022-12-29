@@ -19,7 +19,7 @@ class Ui_MainWindow(object):
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(1488, 919)
         icon = QIcon()
-        icon.addFile(u"data/camera_icon.svg", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u"../../srd_tools/camera_calibration_tool/data/camera_icon.svg", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setAutoFillBackground(False)
         MainWindow.setStyleSheet(u"")
@@ -64,7 +64,7 @@ class Ui_MainWindow(object):
         self.pushButton_camera_search.setSizePolicy(sizePolicy)
         self.pushButton_camera_search.setMaximumSize(QSize(16777215, 23))
         icon1 = QIcon()
-        icon1.addFile(u"data/refresh_icon.svg", QSize(), QIcon.Normal, QIcon.Off)
+        icon1.addFile(u"../../srd_tools/camera_calibration_tool/data/refresh_icon.svg", QSize(), QIcon.Normal, QIcon.Off)
         self.pushButton_camera_search.setIcon(icon1)
 
         self.gridLayout_2.addWidget(self.pushButton_camera_search, 0, 1, 1, 1)
@@ -508,7 +508,7 @@ class Ui_MainWindow(object):
         self.pushButton_save_param = QPushButton(self.groupBox_calibration)
         self.pushButton_save_param.setObjectName(u"pushButton_save_param")
         icon2 = QIcon()
-        icon2.addFile(u"data/save_icon.svg", QSize(), QIcon.Normal, QIcon.Off)
+        icon2.addFile(u"../../srd_tools/camera_calibration_tool/data/save_icon.svg", QSize(), QIcon.Normal, QIcon.Off)
         self.pushButton_save_param.setIcon(icon2)
 
         self.verticalLayout_calibration.addWidget(self.pushButton_save_param)
@@ -554,8 +554,8 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget_source.setCurrentIndex(1)
-        self.tabWidget_calibration.setCurrentIndex(1)
+        self.tabWidget_source.setCurrentIndex(0)
+        self.tabWidget_calibration.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
