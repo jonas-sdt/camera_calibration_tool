@@ -3,7 +3,17 @@ import os
 import yaml
         
 class CharucoCalibrationSettings():
+    """ Class to hold the calibration settings for charuco calibration
+    """
+    
     def __init__(self, marker_size:float, marker_no:tuple, marker_dict:cv2.aruco.Dictionary):
+        """ Constructor
+
+        Args:
+            marker_size (float): size of a charuco marker in mm
+            marker_no (tuple): number of markers in the charuco board (h, v)
+            marker_dict (cv2.aruco.Dictionary): opencv charuco marker dictionary
+        """
 
         if marker_no[0] < 1 or marker_no[1] < 1:
             raise ValueError("Marker number must be greater than 0")
@@ -17,7 +27,16 @@ class CharucoCalibrationSettings():
         self.marker_dict = marker_dict  # cv2.aruco.Dictionary_get(cv2.aruco.DICT_...)
 
 class ChessboardCalibrationSettings():
+    """ Class to hold the calibration settings for chessboard calibration
+    """
+    
     def __init__(self, square_size:float, board_size:tuple):
+        """ Constructor
+
+        Args:
+            square_size (float): size of a chessboard square in mm
+            board_size (tuple): number of squares in the chessboard (h, v)
+        """
         
         if board_size[0] < 1 or board_size[1] < 1:
             raise ValueError("Board size must be greater than 0")
@@ -30,6 +49,9 @@ class ChessboardCalibrationSettings():
 class CalibrationParameters:
     """Class to hold the calibration parameters"""
     def __init__(self):
+        """ Constructor
+        """
+         
         # initialize everything to 0
         self.f  =0
         self.s_x=0
@@ -42,12 +64,18 @@ class CalibrationParameters:
         self.t  =0
 
     def to_dict(self):
+        """ Converts all parameter to a dictionary
+        """
         return self.__dict__
     
     def __iter__(self):
+        """ Iterator for the class
+        """
         return iter(self.__dict__.keys())
 
     def __str__(self):
+        """ String representation of the class in yaml format
+        """
         string_build = lambda x: f"{x}: {str(self.__dict__[x])}\n"
         return "".join(list(map(string_build,self.to_dict())))
      
