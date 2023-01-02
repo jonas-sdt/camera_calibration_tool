@@ -153,6 +153,8 @@ class Ui_MainWindow(object):
         self.spinBox_img_no.setMinimumSize(QSize(50, 0))
         self.spinBox_img_no.setMaximumSize(QSize(100, 16777215))
         self.spinBox_img_no.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+        self.spinBox_img_no.setMinimum(5)
+        self.spinBox_img_no.setValue(10)
 
         self.gridLayout_11.addWidget(self.spinBox_img_no, 0, 1, 1, 1)
 
@@ -600,7 +602,7 @@ class Ui_MainWindow(object):
         self.pushButton_capture.setStatusTip(QCoreApplication.translate("MainWindow", u"Capture image (if >Save Images< is activated this will automatically save the image to the specified path)", None))
 #endif // QT_CONFIG(statustip)
         self.pushButton_capture.setText(QCoreApplication.translate("MainWindow", u"Capture", None))
-        self.tabWidget_source.setTabText(self.tabWidget_source.indexOf(self.FromCameraTab), QCoreApplication.translate("MainWindow", u"FromCamera", None))
+        self.tabWidget_source.setTabText(self.tabWidget_source.indexOf(self.FromCameraTab), QCoreApplication.translate("MainWindow", u"From Camera", None))
 #if QT_CONFIG(statustip)
         self.checkBox_use_saved_images.setStatusTip(QCoreApplication.translate("MainWindow", u"Open already taken images for the calibration", None))
 #endif // QT_CONFIG(statustip)
@@ -618,7 +620,7 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(statustip)
         self.groupBox_Video.setTitle(QCoreApplication.translate("MainWindow", u"Video", None))
         self.cameraView.setText("")
-        self.groupBox_chessboard.setTitle(QCoreApplication.translate("MainWindow", u"Chessboard Specification", None))
+        self.groupBox_chessboard.setTitle(QCoreApplication.translate("MainWindow", u"Calibration Body Specification", None))
         self.doubleSpinBox_sqare_size.setSuffix(QCoreApplication.translate("MainWindow", u" cm", None))
         self.label_square_size.setText(QCoreApplication.translate("MainWindow", u"Square Size:", None))
         self.label_square_no.setText(QCoreApplication.translate("MainWindow", u"Number of Squares (h x v):", None))
