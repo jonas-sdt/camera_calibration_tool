@@ -19,7 +19,7 @@ class Ui_MainWindow(object):
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(1488, 919)
         icon = QIcon()
-        icon.addFile(u"../../srd_tools/camera_calibration_tool/data/camera_icon.svg", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u"data/camera_icon.svg", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setAutoFillBackground(False)
         MainWindow.setStyleSheet(u"")
@@ -64,7 +64,7 @@ class Ui_MainWindow(object):
         self.pushButton_camera_search.setSizePolicy(sizePolicy)
         self.pushButton_camera_search.setMaximumSize(QSize(16777215, 23))
         icon1 = QIcon()
-        icon1.addFile(u"../../srd_tools/camera_calibration_tool/data/refresh_icon.svg", QSize(), QIcon.Normal, QIcon.Off)
+        icon1.addFile(u"data/refresh_icon.svg", QSize(), QIcon.Normal, QIcon.Off)
         self.pushButton_camera_search.setIcon(icon1)
 
         self.gridLayout_2.addWidget(self.pushButton_camera_search, 0, 1, 1, 1)
@@ -165,6 +165,9 @@ class Ui_MainWindow(object):
         self._2.setObjectName(u"_2")
         self.pushButton_capture = QPushButton(self.groupBox_6)
         self.pushButton_capture.setObjectName(u"pushButton_capture")
+        icon2 = QIcon()
+        icon2.addFile(u"data/camera_icon.svg", QSize(), QIcon.Normal, QIcon.On)
+        self.pushButton_capture.setIcon(icon2)
 
         self._2.addWidget(self.pushButton_capture)
 
@@ -246,6 +249,7 @@ class Ui_MainWindow(object):
 
         self.groupBox_Video = QGroupBox(self.centralwidget)
         self.groupBox_Video.setObjectName(u"groupBox_Video")
+        self.groupBox_Video.setAlignment(Qt.AlignCenter)
         self.gridLayout_4 = QGridLayout(self.groupBox_Video)
         self.gridLayout_4.setObjectName(u"gridLayout_4")
         self.cameraView = QLabel(self.groupBox_Video)
@@ -256,6 +260,7 @@ class Ui_MainWindow(object):
         sizePolicy3.setHeightForWidth(self.cameraView.sizePolicy().hasHeightForWidth())
         self.cameraView.setSizePolicy(sizePolicy3)
         self.cameraView.setMaximumSize(QSize(1280, 1280))
+        self.cameraView.setAlignment(Qt.AlignCenter)
 
         self.gridLayout_4.addWidget(self.cameraView, 0, 1, 1, 1)
 
@@ -507,9 +512,9 @@ class Ui_MainWindow(object):
 
         self.pushButton_save_param = QPushButton(self.groupBox_calibration)
         self.pushButton_save_param.setObjectName(u"pushButton_save_param")
-        icon2 = QIcon()
-        icon2.addFile(u"../../srd_tools/camera_calibration_tool/data/save_icon.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.pushButton_save_param.setIcon(icon2)
+        icon3 = QIcon()
+        icon3.addFile(u"data/save_icon.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.pushButton_save_param.setIcon(icon3)
 
         self.verticalLayout_calibration.addWidget(self.pushButton_save_param)
 
@@ -586,8 +591,8 @@ class Ui_MainWindow(object):
         self.pushButton_path_window.setStatusTip(QCoreApplication.translate("MainWindow", u"Open folder selection dialog", None))
 #endif // QT_CONFIG(statustip)
         self.pushButton_path_window.setText(QCoreApplication.translate("MainWindow", u"Select path", None))
-        self.groupBox_5.setTitle(QCoreApplication.translate("MainWindow", u"Autotimer", None))
-        self.pushButton_start_autotimer.setText(QCoreApplication.translate("MainWindow", u"Start Auto Capture", None))
+        self.groupBox_5.setTitle(QCoreApplication.translate("MainWindow", u"Self Timer", None))
+        self.pushButton_start_autotimer.setText(QCoreApplication.translate("MainWindow", u"Start Self Timer", None))
         self.label_delay_seconds.setText(QCoreApplication.translate("MainWindow", u"Delay:", None))
         self.label_img_no.setText(QCoreApplication.translate("MainWindow", u"Number of Images:", None))
         self.progressBar_img_cnt.setFormat(QCoreApplication.translate("MainWindow", u"%v", None))
