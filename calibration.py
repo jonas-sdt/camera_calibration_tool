@@ -298,6 +298,12 @@ def save_config(params:CalibrationParameters, path:str=os.getcwd()):
         raise RuntimeError()
 
 def autocapture(fn_end:callable, kwargs):
+    """autocapture routine
+
+    Args:
+        fn_end (callable): function to be called at the end of the autocapture
+        kwargs (gui): gui object
+    """
     for i in range(kwargs.ui.spinBox_img_no.value()):
         kwargs.ui.pushButton_capture.click()
         kwargs.ui.progressBar_img_cnt.setValue(kwargs.ui.progressBar_img_cnt.value()+1)
@@ -305,6 +311,14 @@ def autocapture(fn_end:callable, kwargs):
     kwargs.gui_states['AutotimerStopped'].activate(reset_fn=None, gui=kwargs)
 
 def load_imgs(img_paths:list) -> list:
+    """load images from disk with opencv
+
+    Args:
+        img_paths (list): str list of image paths
+
+    Returns:
+        list: cv2 images list
+    """
     imgs = list()
     for path in img_paths:
         imgs.append(cv2.imread(path))
