@@ -1,32 +1,6 @@
-from PySide2.QtWidgets import QVBoxLayout, QLabel, QPushButton, QWidget, QMainWindow, QApplication
-from PySide2.QtCore import QTimer, QRunnable, Slot, Signal, QObject, QThreadPool
+from PySide2.QtCore import QRunnable, Slot
 
 import sys
-import traceback
-
-# class _WorkerSignals(QObject):
-#     '''
-#     Defines the signals available from a running worker thread.
-
-#     Supported signals are:
-
-#     finished
-#         No data
-
-#     error
-#         tuple (exctype, value, traceback.format_exc() )
-
-#     result
-#         object data returned from processing, anything
-
-#     progress
-#         int indicating % progress
-
-#     '''
-#     finished = Signal()
-#     error = Signal(tuple)
-#     result = Signal(object)
-#     progress = Signal(int)
 
 class Worker(QRunnable):
     '''
@@ -64,7 +38,6 @@ class Worker(QRunnable):
         try:
             result = self.fn(*self.args, **self.kwargs)
         except:
-            traceback.print_exc()
             exctype, value = sys.exc_info()[:2]
             # self.signals.error.emit((exctype, value, traceback.format_exc()))
         else:
