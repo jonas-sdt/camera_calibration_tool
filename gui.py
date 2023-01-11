@@ -8,22 +8,26 @@ from qt_worker import Worker
 import time
 
 class GUI_State():
-    def __init__(self, fn:callable, active_gui_elements:list, inactive_gui_elements:list=None):
+    
+    def __init__(self, fn:callable):
+        """Constructor for GUI_State
+
+        Args:
+            fn (callable): run this function when this state is activated
+            active_gui_elements (list): list of gui elements to be activated
+            inactive_gui_elements (list, optional): list of gui elements to be deactivated. Defaults to None.
+        """
         self.fn = fn
-        self.inactive_gui_elements = inactive_gui_elements if inactive_gui_elements is not None else []
-        self.active_gui_elements = []
     
     def activate(self, reset_fn, gui):
+        """Function to activate this state
+
+        Args:
+            reset_fn (callable): function to reset the gui if neccessary.
+            gui (GUI): GUI object to be changed
+        """
         if reset_fn is not None:
-            reset_fn()    
-        
-        # deactivate the elements of this state
-        for element in self.inactive_gui_elements:
-            element.setEnabled(False)
-        
-        # only activate the elements of this state
-        for element in self.active_gui_elements:
-            element.setEnabled(True)
+            reset_fn()
             
         # run the function of this state
         self.fn()
@@ -122,18 +126,17 @@ class GUI(QtWidgets.QMainWindow):
     def _setGUIStates(self):
         
         self.gui_states = {
-            "Reset":                    GUI_State(self._resetGUI, []),
-            "Init":                     GUI_State(self._initGUI, []),
-            "CameraNotSelected":        GUI_State(self._stateCameraNotSelected, []),
-            "CameraSelected":           GUI_State(self._stateCameraSelected, []),
-            "SaveImagesChecked":        GUI_State(self._stateSaveImagesChecked, []),
-            "UseSavedImagesChecked":    GUI_State(self._stateUseSavedImagesChecked, []),
-            "AutotimerChecked":         GUI_State(self._stateAutotimerChecked, []),
-            "AutotimerStarted":         GUI_State(self._stateAutotimerStarted, []),
-            "AutotimerStopped":         GUI_State(self._stateAutotimerStopped, []),
-            "ParametersEntered":        GUI_State(self._stateParametersEntered, []),
-            "ParametersDetermined":     GUI_State(self._stateParametersDetermined, []),
-            "PreviewCalibrationChecked":GUI_State(self._statePreviewCalibrationChecked, [])
+            "Reset":                    GUI_State(self._resetGUI),
+            "Init":                     GUI_State(self._initGUI),
+            "CameraNotSelected":        GUI_State(self._stateCameraNotSelected),
+            "CameraSelected":           GUI_State(self._stateCameraSelected),
+            "SaveImagesChecked":        GUI_State(self._stateSaveImagesChecked),
+            "UseSavedImagesChecked":    GUI_State(self._stateUseSavedImagesChecked),
+            "AutotimerStarted":         GUI_State(self._stateAutotimerStarted),
+            "AutotimerStopped":         GUI_State(self._stateAutotimerStopped),
+            "ParametersEntered":        GUI_State(self._stateParametersEntered),
+            "ParametersDetermined":     GUI_State(self._stateParametersDetermined),
+            "PreviewCalibrationChecked":GUI_State(self._statePreviewCalibrationChecked)
         }
     
     def _resetGUI(self):
@@ -200,61 +203,56 @@ class GUI(QtWidgets.QMainWindow):
         
     def _stateCameraSelected(self):
         self.stop_capture = False
-        # self.ui.comboBox_camera.setIndex(0)
         self.ui.checkBox_save_images.setEnabled(True)
-        self.ui.spinBox_delay_seconds.setEnabled(True)
         self.ui.pushButton_capture.setEnabled(True)
         self.ui.pushButton_start_autotimer.setEnabled(True)
+        self.ui.spinBox_delay_seconds.setEnabled(True)
 
     def _stateSaveImagesChecked(self):
         self.ui.checkBox_save_images.setEnabled(True)
         self.ui.lineEdit_path.setEnabled(True)
-        self.ui.pushButton_path_window.setEnabled(True)
         self.ui.pushButton_capture.setEnabled(True)
+        self.ui.pushButton_path_window.setEnabled(True)
 
     def _stateUseSavedImagesChecked(self):
-        self.ui.pushButton_select_images.setEnabled(True)
-        self.ui.pushButton_capture.setEnabled(False)
         self.ui.comboBox_camera.setEnabled(False)
-    
-    def _stateAutotimerChecked(self):
-        pass
+        self.ui.pushButton_capture.setEnabled(False)
+        self.ui.pushButton_select_images.setEnabled(True)
     
     def _stateAutotimerStarted(self):
-        self.ui.progressBar_img_cnt.setMaximum(self.ui.spinBox_img_no.value())
-        self.ui.listWidget_imgs.setEnabled(True)
-        self.ui.pushButton_start_autotimer.setEnabled(True)
-        self.ui.pushButton_start_autotimer.setText("Stop Self Timer")
-        self.ui.comboBox_camera.setEnabled(False)
-        self.ui.pushButton_camera_search.setEnabled(False)
-        # prevent tab change 
-        self.ui.tabWidget_source.setTabEnabled(1, False)
         self.ui.checkBox_save_images.setEnabled(False)
+        self.ui.comboBox_camera.setEnabled(False)
         self.ui.lineEdit_path.setEnabled(False)
-        self.ui.spinBox_img_no.setEnabled(False)
-        self.ui.spinBox_delay_seconds.setEnabled(False)
-        self.ui.pushButton_capture.setEnabled(False)
-        self.ui.tabWidget_calibration.setEnabled(False)
+        self.ui.listWidget_imgs.setEnabled(True)
         self.ui.progressBar_img_cnt.setEnabled(True)
+        self.ui.progressBar_img_cnt.setMaximum(self.ui.spinBox_img_no.value())
+        self.ui.pushButton_camera_search.setEnabled(False)
+        self.ui.pushButton_capture.setEnabled(False)
         self.ui.pushButton_delete_all.setEnabled(False)
         self.ui.pushButton_delete_last.setEnabled(False)
+        self.ui.pushButton_start_autotimer.setEnabled(True)
+        self.ui.pushButton_start_autotimer.setText("Stop Self Timer")
+        self.ui.spinBox_delay_seconds.setEnabled(False)
+        self.ui.spinBox_img_no.setEnabled(False)
+        self.ui.tabWidget_calibration.setEnabled(False)
+        self.ui.tabWidget_source.setTabEnabled(1, False)
     
     def _stateAutotimerStopped(self):
-        self.ui.listWidget_imgs.setEnabled(True)
-        self.ui.pushButton_start_autotimer.setEnabled(True)
-        self.ui.pushButton_start_autotimer.setText("Start Self Timer")
-        self.ui.comboBox_camera.setEnabled(True)
-        self.ui.pushButton_camera_search.setEnabled(True)
-        self.ui.tabWidget_source.setTabEnabled(1, True)
         self.ui.checkBox_save_images.setEnabled(True)
+        self.ui.comboBox_camera.setEnabled(True)
         self.ui.lineEdit_path.setEnabled(True)
-        self.ui.spinBox_img_no.setEnabled(True)
-        self.ui.spinBox_delay_seconds.setEnabled(True)
-        self.ui.pushButton_capture.setEnabled(True)
-        self.ui.tabWidget_calibration.setEnabled(True)
+        self.ui.listWidget_imgs.setEnabled(True)
         self.ui.progressBar_img_cnt.setEnabled(True)
+        self.ui.pushButton_camera_search.setEnabled(True)
+        self.ui.pushButton_capture.setEnabled(True)
         self.ui.pushButton_delete_all.setEnabled(True)
         self.ui.pushButton_delete_last.setEnabled(True)
+        self.ui.pushButton_start_autotimer.setEnabled(True)
+        self.ui.pushButton_start_autotimer.setText("Start Self Timer")
+        self.ui.spinBox_delay_seconds.setEnabled(True)
+        self.ui.spinBox_img_no.setEnabled(True)
+        self.ui.tabWidget_calibration.setEnabled(True)
+        self.ui.tabWidget_source.setTabEnabled(1, True)
 
     def _stateParametersEntered(self):
         pass
@@ -270,6 +268,8 @@ class GUI(QtWidgets.QMainWindow):
     #####################
 
     def _set_signal_slots(self):
+        """Set the signal slots for the GUI elements
+        """
         self.ui.comboBox_camera.currentIndexChanged.connect(self._slot_comboBox_camera_changed)
         self.ui.pushButton_camera_search.clicked.connect(self._slot_pushButton_camera_search_pushed)
         self.ui.checkBox_use_saved_images.stateChanged.connect(self._slot_checkBox_use_saved_images_checked)
@@ -491,7 +491,7 @@ class GUI(QtWidgets.QMainWindow):
         self.calibration_settings = CharucoCalibrationSettings(self.ui.doubleSpinBox_marker_size.value(), (self.ui.spinBox_charuco_no_markers_h.value(), self.ui.spinBox_charuco_no_markers_v.value()), self.ui.comboBox_marker_dict.currentIndex())
     
     def _slot_pushButton_determ_param_pushed(self):
-        """Event handler for TODO
+        """Event handler for: pushButton_determ_param if pushed
         """
         try:
             if self.calibration_settings is None:
@@ -508,13 +508,13 @@ class GUI(QtWidgets.QMainWindow):
             pass
     
     def _slot_pushButton_save_param_pushed(self):
-        """Event handler for TODO
+        """Event handler for: pushButton_save_param if pushed
         """
         path = QtWidgets.QFileDialog.getSaveFileName(self, "Save Parameters", "", "Parameter Files (*.json)")[0]
         save_config(path, self.calibration_parameters)
     
     def _slot_checkBox_preview_calibration_checked(self):
-        """Event handler for TODO
+        """Event handler for: checkBox_preview_calibration if checked
         """
         pass
     
