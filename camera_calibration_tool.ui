@@ -51,7 +51,7 @@
           </property>
           <widget class="QWidget" name="FromCameraTab">
            <attribute name="title">
-            <string>FromCamera</string>
+            <string>From Camera</string>
            </attribute>
            <layout class="QGridLayout" name="gridLayout_9">
             <item row="0" column="0">
@@ -318,6 +318,12 @@
                    <property name="alignment">
                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                    </property>
+                   <property name="minimum">
+                    <number>5</number>
+                   </property>
+                   <property name="value">
+                    <number>10</number>
+                   </property>
                   </widget>
                  </item>
                 </layout>
@@ -515,7 +521,7 @@
            </size>
           </property>
           <property name="title">
-           <string>Chessboard Specification</string>
+           <string>Calibration Body Specification</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_3">
            <property name="leftMargin">
