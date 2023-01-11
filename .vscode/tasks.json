@@ -1,0 +1,15 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Update GUI class",
+            "type": "shell",
+            "command": "cd ${workspaceFolder} && conda run -n camera_calibration_tool pyside2-uic -o gui_class.py camera_calibration_tool.ui",
+            "problemMatcher": [],
+            "icon": {"color": "terminal.ansiRed",
+                     "id":"wrench"}
+        }
+    ]
+}

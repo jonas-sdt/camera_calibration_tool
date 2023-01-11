@@ -1,7 +1,9 @@
 import cv2
 import os
 import yaml
-        
+import time
+import datetime
+  
 class CharucoCalibrationSettings():
     """ Class to hold the calibration settings for charuco calibration
     """
@@ -14,7 +16,7 @@ class CharucoCalibrationSettings():
             marker_no (tuple): number of markers in the charuco board (h, v)
             marker_dict (cv2.aruco.Dictionary): opencv charuco marker dictionary
         """
-
+        
         if marker_no[0] < 1 or marker_no[1] < 1:
             raise ValueError("Marker number must be greater than 0")
         if marker_size < 1:
@@ -118,10 +120,13 @@ class FrameGrabber():
     def video_stream(self, fn_end, kwargs):
         """grabs frames from the camera continously"""
         
-        while(1):
+        while not kwargs[0].stop_capture:
             ret, frame = self.cap.read()
             self.frame = frame
-            fn_end()
+            kwargs[0].frame = frame
+            if fn_end is not None:
+                fn_end(frame, kwargs[1:])
+        self.__del__()
             
     def get_frame_size(self):
         """gets the size of the frame
@@ -140,6 +145,12 @@ class CalibrationImages():
         """Constructor
         """
         self.frames = []
+    def save_image(self, index:int, path:str):
+        """saves an image to disk"""
+        if path[-1] != "/":
+            path += "/"
+        cv2.imwrite(f"{path}img-{index}_{datetime.datetime.now().year}-{datetime.datetime.now().month}-{datetime.datetime.now().day}_{datetime.datetime.now().hour}-{datetime.datetime.now().minute}.png", self.frames[index])
+        
 
 def _calibrate_chessboard(settings:ChessboardCalibrationSettings, frames:list) -> CalibrationParameters:
     """calibrate the camera using chessboard
@@ -157,7 +168,7 @@ def _calibrate_chessboard(settings:ChessboardCalibrationSettings, frames:list) -
     if frames is None:
         raise ValueError("Frames must not be None")
     
-    # todo
+    # calibration with cv2
     
     return CalibrationParameters()
 
@@ -254,9 +265,12 @@ def list_available_cameras(exception:list) -> list:
         non_working_ports = []
         dev_port = 0
         working_ports = []
-        while len(non_working_ports) < 6: # if there are more than 5 non working ports stop the testing. 
+        while len(non_working_ports) < 6:
             if not dev_port in exception:
-                camera = cv2.VideoCapture(dev_port)
+                try:
+                    camera = cv2.VideoCapture(dev_port)
+                except:
+                    pass
                 if not camera.isOpened():
                     non_working_ports.append(dev_port)
                 else:
@@ -282,3 +296,17 @@ def save_config(params:CalibrationParameters, path:str=os.getcwd()):
             yaml.dump(parameters, file)
     except:
         raise RuntimeError()
+
+def autocapture(fn_end:callable, kwargs):
+    for i in range(kwargs.ui.spinBox_img_no.value()):
+        kwargs.ui.pushButton_capture.click()
+        kwargs.ui.progressBar_img_cnt.setValue(kwargs.ui.progressBar_img_cnt.value()+1)
+        time.sleep(kwargs.ui.spinBox_delay_seconds.value())
+    kwargs.gui_states['AutotimerStopped'].activate(reset_fn=None, gui=kwargs)
+
+def load_imgs(img_paths:list) -> list:
+    imgs = list()
+    for path in img_paths:
+        imgs.append(cv2.imread(path))
+
+    return imgs
