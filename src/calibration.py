@@ -9,6 +9,8 @@ class CharucoCalibrationSettings():
     """ Class to hold the calibration settings for charuco calibration
     """
 
+
+
     def __init__(self, marker_size: float, marker_no: tuple, marker_dict: cv2.aruco.Dictionary):
         """ Constructor
 
@@ -172,8 +174,8 @@ def _calibrate_chessboard(settings: ChessboardCalibrationSettings, frames: list)
         CalibrationParameters: calibration parameters
     """
 
-    if settings is None:
-        raise ValueError("Settings must not be None")
+    if settings is None or type(settings) != ChessboardCalibrationSettings:
+        raise ValueError("Settings must be of type ChessboardCalibrationSettings")
     if frames is None:
         raise ValueError("Frames must not be None")
 
@@ -193,8 +195,8 @@ def _calibrate_charuco(settings: CharucoCalibrationSettings, frames: list) -> Ca
         CalibrationParameters: calibration parameters
     """
 
-    if settings is None:
-        raise ValueError("Settings must not be None")
+    if settings is None or type(settings) != CharucoCalibrationSettings:
+        raise ValueError("Settings must be of type CharucoCalibrationSettings")
     if frames is None:
         raise ValueError("Frames must not be None")
 
@@ -321,10 +323,14 @@ def autocapture(fn_end: callable, kwargs):
         kwargs (gui): gui object
     """
     for i in range(kwargs.ui.spinBox_img_no.value()):
+        start_time = time.time()
         kwargs.ui.pushButton_capture.click()
         kwargs.ui.progressBar_img_cnt.setValue(
             kwargs.ui.progressBar_img_cnt.value()+1)
-        time.sleep(kwargs.ui.spinBox_delay_seconds.value())
+        
+        while time.time() - start_time < kwargs.ui.spinBox_delay_seconds.value():
+            if kwargs.stop_autocapture:
+                return
     kwargs.gui_states['AutotimerStopped'].activate(reset_fn=None, gui=kwargs)
 
 

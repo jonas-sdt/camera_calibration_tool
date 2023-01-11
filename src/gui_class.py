@@ -19,7 +19,7 @@ class Ui_MainWindow(object):
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(1488, 919)
         icon = QIcon()
-        icon.addFile(u"data/camera_icon.svg", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u"src/data/app_icon.svg", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setAutoFillBackground(False)
         MainWindow.setStyleSheet(u"")
@@ -62,9 +62,10 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.pushButton_camera_search.sizePolicy().hasHeightForWidth())
         self.pushButton_camera_search.setSizePolicy(sizePolicy)
+        self.pushButton_camera_search.setMinimumSize(QSize(0, 25))
         self.pushButton_camera_search.setMaximumSize(QSize(16777215, 23))
         icon1 = QIcon()
-        icon1.addFile(u"data/refresh_icon.svg", QSize(), QIcon.Normal, QIcon.Off)
+        icon1.addFile(u"src/data/refresh_icon.svg", QSize(), QIcon.Normal, QIcon.Off)
         self.pushButton_camera_search.setIcon(icon1)
 
         self.gridLayout_2.addWidget(self.pushButton_camera_search, 0, 1, 1, 1)
@@ -168,7 +169,7 @@ class Ui_MainWindow(object):
         self.pushButton_capture = QPushButton(self.groupBox_6)
         self.pushButton_capture.setObjectName(u"pushButton_capture")
         icon2 = QIcon()
-        icon2.addFile(u"data/camera_icon.svg", QSize(), QIcon.Normal, QIcon.On)
+        icon2.addFile(u"src/data/save_icon.svg", QSize(), QIcon.Normal, QIcon.On)
         self.pushButton_capture.setIcon(icon2)
 
         self._2.addWidget(self.pushButton_capture)
@@ -300,6 +301,7 @@ class Ui_MainWindow(object):
 
         self.doubleSpinBox_sqare_size = QDoubleSpinBox(self.tab_chessboard)
         self.doubleSpinBox_sqare_size.setObjectName(u"doubleSpinBox_sqare_size")
+        self.doubleSpinBox_sqare_size.setMinimum(5.000000000000000)
 
         self.horizontalLayout_7.addWidget(self.doubleSpinBox_sqare_size)
 
@@ -324,6 +326,7 @@ class Ui_MainWindow(object):
 
         self.spinBox_chessboard_no_squares_h = QSpinBox(self.tab_chessboard)
         self.spinBox_chessboard_no_squares_h.setObjectName(u"spinBox_chessboard_no_squares_h")
+        self.spinBox_chessboard_no_squares_h.setMinimum(5)
 
         self.horizontalLayout_8.addWidget(self.spinBox_chessboard_no_squares_h)
 
@@ -336,6 +339,7 @@ class Ui_MainWindow(object):
 
         self.spinBox_chessboard_no_squares_v = QSpinBox(self.tab_chessboard)
         self.spinBox_chessboard_no_squares_v.setObjectName(u"spinBox_chessboard_no_squares_v")
+        self.spinBox_chessboard_no_squares_v.setMinimum(5)
 
         self.horizontalLayout_8.addWidget(self.spinBox_chessboard_no_squares_v)
 
@@ -368,6 +372,7 @@ class Ui_MainWindow(object):
 
         self.spinBox_charuco_no_markers_h = QSpinBox(self.tab_charuco)
         self.spinBox_charuco_no_markers_h.setObjectName(u"spinBox_charuco_no_markers_h")
+        self.spinBox_charuco_no_markers_h.setMinimum(5)
 
         self.horizontalLayout_2.addWidget(self.spinBox_charuco_no_markers_h)
 
@@ -378,6 +383,7 @@ class Ui_MainWindow(object):
 
         self.spinBox_charuco_no_markers_v = QSpinBox(self.tab_charuco)
         self.spinBox_charuco_no_markers_v.setObjectName(u"spinBox_charuco_no_markers_v")
+        self.spinBox_charuco_no_markers_v.setMinimum(5)
 
         self.horizontalLayout_2.addWidget(self.spinBox_charuco_no_markers_v)
 
@@ -419,6 +425,7 @@ class Ui_MainWindow(object):
 
         self.doubleSpinBox_marker_size = QDoubleSpinBox(self.tab_charuco)
         self.doubleSpinBox_marker_size.setObjectName(u"doubleSpinBox_marker_size")
+        self.doubleSpinBox_marker_size.setMinimum(5.000000000000000)
 
         self.horizontalLayout_3.addWidget(self.doubleSpinBox_marker_size)
 
@@ -515,7 +522,8 @@ class Ui_MainWindow(object):
         self.pushButton_save_param = QPushButton(self.groupBox_calibration)
         self.pushButton_save_param.setObjectName(u"pushButton_save_param")
         icon3 = QIcon()
-        icon3.addFile(u"data/save_icon.svg", QSize(), QIcon.Normal, QIcon.Off)
+        icon3.addFile(u"src/data/save_icon.svg", QSize(), QIcon.Normal, QIcon.Off)
+        icon3.addFile(u"src/data/save_icon.svg", QSize(), QIcon.Normal, QIcon.On)
         self.pushButton_save_param.setIcon(icon3)
 
         self.verticalLayout_calibration.addWidget(self.pushButton_save_param)
@@ -529,24 +537,6 @@ class Ui_MainWindow(object):
         self.verticalSpacer_bottom = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.verticalLayout_right.addItem(self.verticalSpacer_bottom)
-
-        self.groupBox_preview = QGroupBox(self.centralwidget)
-        self.groupBox_preview.setObjectName(u"groupBox_preview")
-        sizePolicy1.setHeightForWidth(self.groupBox_preview.sizePolicy().hasHeightForWidth())
-        self.groupBox_preview.setSizePolicy(sizePolicy1)
-        self.groupBox_preview.setMaximumSize(QSize(350, 16777215))
-        self.gridLayout_6 = QGridLayout(self.groupBox_preview)
-        self.gridLayout_6.setObjectName(u"gridLayout_6")
-        self.gridLayout_6.setContentsMargins(0, 0, 0, 0)
-        self.checkBox_preview_calibration = QCheckBox(self.groupBox_preview)
-        self.checkBox_preview_calibration.setObjectName(u"checkBox_preview_calibration")
-        sizePolicy1.setHeightForWidth(self.checkBox_preview_calibration.sizePolicy().hasHeightForWidth())
-        self.checkBox_preview_calibration.setSizePolicy(sizePolicy1)
-
-        self.gridLayout_6.addWidget(self.checkBox_preview_calibration, 0, 0, 1, 1)
-
-
-        self.verticalLayout_right.addWidget(self.groupBox_preview)
 
 
         self.horizontalLayout_central.addLayout(self.verticalLayout_right)
@@ -570,6 +560,9 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Camera Calibration Tool", None))
+#if QT_CONFIG(accessibility)
+        MainWindow.setAccessibleName(QCoreApplication.translate("MainWindow", u"Camera Calibration Tool", None))
+#endif // QT_CONFIG(accessibility)
         self.groupBox_2.setTitle(QCoreApplication.translate("MainWindow", u"Camera", None))
 #if QT_CONFIG(statustip)
         self.comboBox_camera.setStatusTip(QCoreApplication.translate("MainWindow", u"Choose a camera", None))
@@ -602,7 +595,7 @@ class Ui_MainWindow(object):
 #if QT_CONFIG(statustip)
         self.spinBox_img_no.setStatusTip(QCoreApplication.translate("MainWindow", u"Select number of images to take", None))
 #endif // QT_CONFIG(statustip)
-        self.groupBox_6.setTitle(QCoreApplication.translate("MainWindow", u"ManualCapture", None))
+        self.groupBox_6.setTitle(QCoreApplication.translate("MainWindow", u"Manual Capture", None))
 #if QT_CONFIG(statustip)
         self.pushButton_capture.setStatusTip(QCoreApplication.translate("MainWindow", u"Capture image (if >Save Images< is activated this will automatically save the image to the specified path)", None))
 #endif // QT_CONFIG(statustip)
@@ -693,10 +686,5 @@ class Ui_MainWindow(object):
         self.pushButton_save_param.setStatusTip(QCoreApplication.translate("MainWindow", u"Save camera parameters as a .yaml file.", None))
 #endif // QT_CONFIG(statustip)
         self.pushButton_save_param.setText(QCoreApplication.translate("MainWindow", u"Save Parameters", None))
-        self.groupBox_preview.setTitle(QCoreApplication.translate("MainWindow", u"Preview", None))
-#if QT_CONFIG(statustip)
-        self.checkBox_preview_calibration.setStatusTip(QCoreApplication.translate("MainWindow", u"Preview calibrated camera image", None))
-#endif // QT_CONFIG(statustip)
-        self.checkBox_preview_calibration.setText(QCoreApplication.translate("MainWindow", u"Preview Calibration", None))
     # retranslateUi
 

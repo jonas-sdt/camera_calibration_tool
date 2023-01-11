@@ -14,10 +14,10 @@ def print_blue(string):
 # * Parse command line arguments
 
 parser = argparse.ArgumentParser(description='Camera Calibration Tool.')
-parser.add_argument('-d', '--image_dir', type=str, help='Directory with calibration images.')
-parser.add_argument('-s','--size', type=float, help='Size of the chessboard/charuco squares in meters.')
-parser.add_argument('--vertical', type=int, help='Number of squares in height on the chessboard/charuco.')
-parser.add_argument('--horizontal', type=int, help='Number of squares in width on the chessboard/charuco.')
+parser.add_argument('-d', '--image_dir', type=str, help='Directory with calibration images. Default = current directory.')
+parser.add_argument('-s','--size', type=float, help='Size of the chessboard/charuco squares in cm. Min = 5cm')
+parser.add_argument('--vertical', type=int, help='Number of squares in height on the chessboard/charuco. Min = 5')
+parser.add_argument('--horizontal', type=int, help='Number of squares in width on the chessboard/charuco. Min = 5')
 parser.add_argument('-m','--marker_dict', type=int, help="""Index of charuco marker dict. 
                     | 01: DICT_4X4_50
                     | 02: DICT_4X4_100
@@ -36,12 +36,9 @@ parser.add_argument('-m','--marker_dict', type=int, help="""Index of charuco mar
                     | 15: DICT_7X7_250
                     | 16: DICT_7X7_1000""")
 
-try:
-    args = parser.parse_args()
-except:
-    print_red("Error parsing arguments. Please check your input.")
-    exit()
+args = parser.parse_args()
 
+print("Camera Calibration Tool\n")
 
 # * Read command line arguments
 if args.image_dir is not None:
@@ -50,14 +47,24 @@ else:
     image_dir = os.getcwd()
     
 if args.size is not None:
+    if args.size < 5:
+        print_red("Square size must be greater than 5cm")
+        exit()
     square_size = args.size
 else:
     square_size = 10            # in cm
 
-if args.vertical is not None and args.horizontal is not None:
-    marker_no = (args.horizontal, args.vertical)
+if args.vertical is None and args.horizontal is None:
+    marker_no = (5, 5)
+    
+elif args.vertical is None or args.horizontal is None:
+    print_red("Vertical and horizontal number must be specified together")
+    marker_no = (5, 5)
 else:
-    marker_no = (7, 5)
+    if args.vertical < 5 or args.horizontal < 5:
+        print_red("Vertical/Horizontal number must be greater than 5")
+        exit()
+    marker_no = (args.horizontal, args.vertical)
 
 # * Create calibration settings
 if args.marker_dict is not None:

@@ -83,12 +83,7 @@ class GUI(QtWidgets.QMainWindow):
         """Starts the Qt GUI - this function runs until the GUI is closed"""
         self.show()
         exit_code = self.app.exec_()
-        self._stop()
         sys.exit(exit_code)
-        
-    def _stop(self):
-        """Deletes the video stream and stops the GUI - when implemented... TODO"""
-        pass
     
     def update_frame(self, frame, kwargs):
         """Updates the frame in the GUI"""
@@ -136,11 +131,10 @@ class GUI(QtWidgets.QMainWindow):
             "AutotimerStopped":         GUI_State(self._stateAutotimerStopped),
             "ParametersEntered":        GUI_State(self._stateParametersEntered),
             "ParametersDetermined":     GUI_State(self._stateParametersDetermined),
-            "PreviewCalibrationChecked":GUI_State(self._statePreviewCalibrationChecked)
         }
     
     def _resetGUI(self):
-        self.stop_autotimer = True
+        self.stop_autocapture = True
         self.stop_capture = True
         """resets the gui to the default state
         """
@@ -376,13 +370,13 @@ class GUI(QtWidgets.QMainWindow):
         """Event handler for: pushButton_start_autotimer if pushed
         """
         if self.ui.pushButton_start_autotimer.text() == "Start Self Timer":
-            self.gui_states['AutotimerStarted'].activate(reset_fn=None, gui=self)
             self.stop_capture = False
+            self.gui_states['AutotimerStarted'].activate(reset_fn=None, gui=self)
             self.capture_thread = Worker(autocapture, self.update_frame, self)
             self.threadpool_autotimer = QThreadPool()
             self.threadpool_autotimer.start(self.capture_thread)
         else:
-            self.stop_autotimer = True
+            self.stop_autocapture = True
             self.previous_state.activate(reset_fn=self._resetGUI, gui=self)
     
     def _slot_pushButton_capture_pushed(self):
@@ -397,7 +391,7 @@ class GUI(QtWidgets.QMainWindow):
         if self.ui.checkBox_save_images.isChecked():
             self.calibration_images.save_image(len(self.calibration_images.frames)-1, self.ui.lineEdit_path.text())
             
-        if len(self.calibration_images.frames) > 5 and self.stop_autotimer is not False:
+        if len(self.calibration_images.frames) > 5 and self.stop_autocapture is not False:
             self.ui.pushButton_determ_param.setEnabled(True)
     
     def _slot_listWidget_imgs_itemClicked(self):
@@ -445,7 +439,7 @@ class GUI(QtWidgets.QMainWindow):
         if self.ui.tabWidget_calibration.currentIndex() == 0:
             self.calibration_settings = ChessboardCalibrationSettings(self.ui.doubleSpinBox_sqare_size.value(), (self.ui.spinBox_chessboard_no_squares_h.value(), self.ui.spinBox_chessboard_no_squares_v.value()))
         elif self.ui.tabWidget_calibration.currentIndex() == 1:
-            self.calibration_settings = CharucoCalibrationSettings(self.ui.doubleSpinBox_marker_size.value(), (self.ui.spinBox_charuco_no_markers_h,self.ui.spinBox_charuco_no_markers_v), self.ui.comboBox_marker_dict.currentIndex())
+            self.calibration_settings = CharucoCalibrationSettings(self.ui.doubleSpinBox_marker_size.value(), (self.ui.spinBox_charuco_no_markers_h.value(),self.ui.spinBox_charuco_no_markers_v.value()), self.ui.comboBox_marker_dict.currentIndex())
         else:
             raise ValueError("Unknown calibration type")
     
