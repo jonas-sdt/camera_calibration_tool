@@ -312,7 +312,6 @@ def _calibrate_charuco(settings: CharucoCalibrationSettings, frames: list) -> Ca
                 allCorners.append(res2[1])
                 allIds.append(res2[2])
 
-            cv2.aruco.drawDetectedMarkers(gray,res[0],res[1])
         decimator+=1
 
     imsize = gray_frames[0].shape
