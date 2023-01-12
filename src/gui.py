@@ -7,6 +7,11 @@ from calibration import *
 from qt_worker import Worker
 import time
 
+def print_red(string):
+    print(f"\033[91m{string}\033[0m")
+def print_blue(string):
+    print(f"\033[44m{string}\033[0m")
+
 class GUI_State():
     
     def __init__(self, fn:callable):
@@ -76,6 +81,8 @@ class GUI(QtWidgets.QMainWindow):
         self.ui.lineEdit_path.setText(image_dir)
         self.calibration_parameters = calibration_parameters
         
+        self.ui.pushButton_camera_search.click()
+        
         # * start gui
         self._start_gui()
     
@@ -87,13 +94,6 @@ class GUI(QtWidgets.QMainWindow):
     
     def update_frame(self, frame, kwargs):
         """Updates the frame in the GUI"""
-        
-        # self.calibration_settings.board_size = (self.ui.spinBox_chessboard_no_squares_h.value(), self.ui.spinBox_chessboard_no_squares_v.value())
-        # self.calibration_settings.square_size = self.ui.doubleSpinBox_chessboard_square_size.value()
-        
-        # self.calibration_settings.marker_no = (self.ui.spinBox_charuco_no_markers_h.value(), self.ui.spinBox_charuco_no_markers_v.value())
-        # self.calibration_settings.marker_size = self.ui.doubleSpinBox_charuco_marker_size.value()
-        # self.calibration_settings.marker_dict = self.ui.comboBox_marker_dict.currentIndex()-1 if self.ui.comboBox_marker_dict.currentText != "" else 0
         
         if self.save_frame is True:
             self.frame = frame
@@ -129,7 +129,6 @@ class GUI(QtWidgets.QMainWindow):
             "UseSavedImagesChecked":    GUI_State(self._stateUseSavedImagesChecked),
             "AutotimerStarted":         GUI_State(self._stateAutotimerStarted),
             "AutotimerStopped":         GUI_State(self._stateAutotimerStopped),
-            "ParametersEntered":        GUI_State(self._stateParametersEntered),
             "ParametersDetermined":     GUI_State(self._stateParametersDetermined),
         }
     
@@ -167,7 +166,7 @@ class GUI(QtWidgets.QMainWindow):
                 self.ui.spinBox_charuco_no_markers_h.setValue(self.calibration_settings.marker_no[0])
                 self.ui.comboBox_marker_dict.setCurrentText(self.calibration_settings.marker_dict)
             elif type(self.calibration_settings) is ChessboardCalibrationSettings:
-                self.ui.doubleSpinBox_sqare_size.setValue(self.calibration_settings.square_size)
+                self.ui.doubleSpinBox_sqare_size.setValue(self.calibration_settings.square_size/10)
                 self.ui.spinBox_chessboard_no_squares_v.setValue(self.calibration_settings.board_size[1])
                 self.ui.spinBox_chessboard_no_squares_h.setValue(self.calibration_settings.board_size[0])
             else:
@@ -245,12 +244,18 @@ class GUI(QtWidgets.QMainWindow):
         self.ui.spinBox_img_no.setEnabled(True)
         self.ui.tabWidget_calibration.setEnabled(True)
         self.ui.tabWidget_source.setTabEnabled(1, True)
-
-    def _stateParametersEntered(self):
-        pass
     
     def _stateParametersDetermined(self):
-        pass
+        # fill tableWidget with parameters
+        self.ui.tableWidget_parameters.setItem(0,1,QtWidgets.QTableWidgetItem(str(f"({self.calibration_parameters.f_x}, {self.calibration_parameters.f_y})")))
+        self.ui.tableWidget_parameters.setItem(1,1,QtWidgets.QTableWidgetItem(str(f"({self.calibration_parameters.c_x}, {self.calibration_parameters.c_y})")))
+        self.ui.tableWidget_parameters.setItem(2,1,QtWidgets.QTableWidgetItem(str(self.calibration_parameters.k_1)))
+        self.ui.tableWidget_parameters.setItem(3,1,QtWidgets.QTableWidgetItem(str(self.calibration_parameters.k_2)))
+        self.ui.tableWidget_parameters.setItem(4,1,QtWidgets.QTableWidgetItem(str(self.calibration_parameters.p_1)))
+        self.ui.tableWidget_parameters.setItem(5,1,QtWidgets.QTableWidgetItem(str(self.calibration_parameters.p_2)))
+        self.ui.tableWidget_parameters.setItem(6,1,QtWidgets.QTableWidgetItem(str(self.calibration_parameters.k_3)))
+        self.ui.pushButton_save_param.setEnabled(True)
+
 
     #####################
     ####### slots #######
@@ -387,11 +392,21 @@ class GUI(QtWidgets.QMainWindow):
         self.ui.pushButton_delete_all.setEnabled(True)
         self.stop_capture = False
         self.calibration_images.frames.append(self.frame)
+        
         self.ui.listWidget_imgs.addItem("Image " + str(len(self.calibration_images.frames)))
+        
+        # check if chessboard corners can be found in image
+        if type(self.calibration_settings)==ChessboardCalibrationSettings:
+            ret, corners = cv2.findChessboardCorners(self.frame, list((i-1 for i in self.calibration_settings.board_size)))
+        
+            if not ret:
+                # change label to red
+                self.ui.listWidget_imgs.item(len(self.calibration_images.frames)-1).setForeground(QtGui.QColor(255, 0, 0))
+        
         if self.ui.checkBox_save_images.isChecked():
             self.calibration_images.save_image(len(self.calibration_images.frames)-1, self.ui.lineEdit_path.text())
             
-        if len(self.calibration_images.frames) > 5 and self.stop_autocapture is not False:
+        if len(self.calibration_images.frames) > 10 and self.stop_autocapture is not False:
             self.ui.pushButton_determ_param.setEnabled(True)
     
     def _slot_listWidget_imgs_itemClicked(self):
@@ -412,7 +427,7 @@ class GUI(QtWidgets.QMainWindow):
             self.ui.pushButton_delete_last.setEnabled(False)
             self.ui.pushButton_determ_param.setEnabled(False)
             
-        elif self.ui.listWidget_imgs.count() < 5:
+        elif self.ui.listWidgecalibration_framest_imgs.count() < 5:
             self.ui.pushButton_determ_param.setEnabled(False)
         elif self.ui.listWidget_imgs.count() > 5:
             self.ui.pushButton_determ_param.setEnabled(True)
@@ -437,7 +452,7 @@ class GUI(QtWidgets.QMainWindow):
         """Event handler for: tabWidget_calibration if entry is changed
         """
         if self.ui.tabWidget_calibration.currentIndex() == 0:
-            self.calibration_settings = ChessboardCalibrationSettings(self.ui.doubleSpinBox_sqare_size.value(), (self.ui.spinBox_chessboard_no_squares_h.value(), self.ui.spinBox_chessboard_no_squares_v.value()))
+            self.calibration_settings = ChessboardCalibrationSettings(self.ui.doubleSpinBox_sqare_size.value()*10, (self.ui.spinBox_chessboard_no_squares_h.value(), self.ui.spinBox_chessboard_no_squares_v.value()))
         elif self.ui.tabWidget_calibration.currentIndex() == 1:
             self.calibration_settings = CharucoCalibrationSettings(self.ui.doubleSpinBox_marker_size.value(), (self.ui.spinBox_charuco_no_markers_h.value(),self.ui.spinBox_charuco_no_markers_v.value()), self.ui.comboBox_marker_dict.currentIndex())
         else:
@@ -446,17 +461,17 @@ class GUI(QtWidgets.QMainWindow):
     def _slot_spinBox_chessboard_no_squares_h_changed(self):
         """Event handler for: spinBox_chessboard_no_squares_h if value changed
         """
-        self.calibration_settings = ChessboardCalibrationSettings(self.ui.doubleSpinBox_sqare_size.value(), (self.ui.spinBox_chessboard_no_squares_h.value(), self.ui.spinBox_chessboard_no_squares_v.value()))
+        self.calibration_settings = ChessboardCalibrationSettings(self.ui.doubleSpinBox_sqare_size.value()*10, (self.ui.spinBox_chessboard_no_squares_h.value(), self.ui.spinBox_chessboard_no_squares_v.value()))
     
     def _slot_spinBox_chessboard_no_squares_v_changed(self):
         """Event handler for: spinBox_chessboard_no_squares_v if value changed
         """
-        self.calibration_settings = ChessboardCalibrationSettings(self.ui.doubleSpinBox_sqare_size.value(), (self.ui.spinBox_chessboard_no_squares_h.value(), self.ui.spinBox_chessboard_no_squares_v.value()))
+        self.calibration_settings = ChessboardCalibrationSettings(self.ui.doubleSpinBox_sqare_size.value()*10, (self.ui.spinBox_chessboard_no_squares_h.value(), self.ui.spinBox_chessboard_no_squares_v.value()))
     
     def _slot_doubleSpinBox_sqare_size_changed(self):
         """Event handler for: doubleSpinBox_sqare_size if value changed
         """
-        self.calibration_settings = ChessboardCalibrationSettings(self.ui.doubleSpinBox_sqare_size.value(), (self.ui.spinBox_chessboard_no_squares_h.value(), self.ui.spinBox_chessboard_no_squares_v.value()))
+        self.calibration_settings = ChessboardCalibrationSettings(self.ui.doubleSpinBox_sqare_size.value()*10, (self.ui.spinBox_chessboard_no_squares_h.value(), self.ui.spinBox_chessboard_no_squares_v.value()))
     
     def _slot_spinBox_charuco_no_markers_h_changed(self):
         """Event handler for: spinBox_charuco_no_markers_h if value changed
@@ -481,19 +496,16 @@ class GUI(QtWidgets.QMainWindow):
     def _slot_pushButton_determ_param_pushed(self):
         """Event handler for: pushButton_determ_param if pushed
         """
-        try:
-            if self.calibration_settings is None:
-                raise ValueError("No calibration settings defined")
-            elif type(self.calibration_settings) is ChessboardCalibrationSettings:
-                self.calibration_parameters = CameraCalibrator.calibrate_chessboard(self.calibration_settings, self.imgs)
-                self.gui_states["ParametersDetermined"].activate(reset_fn=None,gui=self)
-            elif type(self.calibration_settings) is CharucoCalibrationSettings:
-                self.calibration_parameters = CameraCalibrator.calibrate_charuco(self.calibration_settings, self.imgs)
-                self.gui_states["ParametersDetermined"].activate(reset_fn=None,gui=self)
-            else:
-                raise ValueError("Unknown calibration type")
-        except:
-            pass
+        if self.calibration_settings is None:
+            raise ValueError("No calibration settings defined")
+        elif type(self.calibration_settings) is ChessboardCalibrationSettings:
+            self.calibration_parameters = CameraCalibrator.calibrate_chessboard(self.calibration_settings, self.calibration_images.frames)
+            self.gui_states["ParametersDetermined"].activate(reset_fn=None,gui=self)
+        elif type(self.calibration_settings) is CharucoCalibrationSettings:
+            self.calibration_parameters = CameraCalibrator.calibrate_charuco(self.calibration_settings, self.calibration_images.frames)
+            self.gui_states["ParametersDetermined"].activate(reset_fn=None,gui=self)
+        else:
+            raise ValueError("Unknown calibration type")
     
     def _slot_pushButton_save_param_pushed(self):
         """Event handler for: pushButton_save_param if pushed

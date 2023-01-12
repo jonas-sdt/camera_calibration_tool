@@ -3,7 +3,12 @@ import os
 import yaml
 import time
 import datetime
+import numpy as np
 
+def print_red(string):
+    print(f"\033[91m{string}\033[0m")
+def print_blue(string):
+    print(f"\033[^4m{string}\033[0m")
 
 class CharucoCalibrationSettings():
     """ Class to hold the calibration settings for charuco calibration
@@ -31,6 +36,25 @@ class CharucoCalibrationSettings():
         self.marker_no = marker_no      # tuple (h, v)
         # cv2.aruco.Dictionary_get(cv2.aruco.DICT_...)
         self.marker_dict = marker_dict
+        
+    def get_marker_dict(self):
+        markers = { 1: cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50),
+                    2: cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_100),
+                    3: cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250),
+                    4: cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_1000),
+                    5: cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_5X5_50),
+                    6: cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_5X5_100),
+                    7: cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_5X5_250),
+                    8: cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_5X5_1000),
+                    9: cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_50),
+                    10: cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_100),
+                    11: cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250),
+                    12: cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_1000),
+                    13: cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_7X7_50),
+                    14: cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_7X7_100),
+                    15: cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_7X7_250),
+                    16: cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_7X7_1000)}
+        return markers.get(self.marker_dict, "Invalid marker dictionary")
 
 
 class ChessboardCalibrationSettings():
@@ -52,6 +76,7 @@ class ChessboardCalibrationSettings():
 
         self.square_size = square_size  # in mm
         self.board_size = board_size    # tuple (h, v)
+    
 
 
 class CalibrationParameters:
@@ -60,17 +85,28 @@ class CalibrationParameters:
     def __init__(self):
         """ Constructor
         """
-
         # initialize everything to 0
-        self.f = 0
-        self.s_x = 0
-        self.s_y = 0
+
+        # * intrinsic parameters
+        # focal length
+        self.f_x = 0
+        self.f_y = 0
+        # pixel size
+        # self.s_x = 0
+        # self.s_y = 0
+        # principal point
         self.c_x = 0
         self.c_y = 0
+        # distortion coefficients
         self.k_1 = 0
         self.k_2 = 0
-        self.R = 0
-        self.t = 0
+        self.p_1 = 0
+        self.p_2 = 0
+        self.k_3 = 0
+        
+        # * extrinsic parameters
+        # self.R = 0  # rotation matrix
+        # self.t = 0  # translation vector
 
     def to_dict(self):
         """ Converts all parameter to a dictionary
@@ -180,8 +216,60 @@ def _calibrate_chessboard(settings: ChessboardCalibrationSettings, frames: list)
         raise ValueError("Frames must not be None")
 
     # calibration with cv2
+    gray_frames = [cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) for frame in frames]
+    
+    objp = np.zeros(((settings.board_size[0]-1)*(settings.board_size[1]-1), 3), np.float32)
+    objp[:, :2] = np.mgrid[0:(settings.board_size[0]-1), 0:(settings.board_size[1]-1)].T.reshape(-1, 2)
+    
+    # Arrays to store object points and image points from all the images.
+    objpoints = [] # 3d point in real world space
+    imgpoints = [] # 2d points in image plane.
+    failed_cnt = 0
+    for frame in gray_frames:
+        ret, corners = cv2.findChessboardCorners(frame, list((i-1 for i in settings.board_size)))
+        
+        if ret == True:
+            objpoints.append(objp)
+            corners2 = cv2.cornerSubPix(frame, corners, (11, 11), (-1, -1), (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
+)
+            imgpoints.append(corners2)
+        else:
+            failed_cnt += 1
+    if len(frames) - failed_cnt < 10:
+        print_red("Calibration failed: Chessboard Corners not found in enough images")
+        raise cv2.error
+    
+    try:
+        ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(objpoints, imgpoints, frame.shape[0:2], None, None)
+    except cv2.error as e:
+        print_red("Calibration failed")
+        raise e
+    
+    if not ret == False:
+        calibration_parameters = CalibrationParameters()
+        # * intrinsic parameters
+        calibration_parameters.f_x = mtx[0][0]
+        calibration_parameters.f_y = mtx[1][1]
+        calibration_parameters.c_x = mtx[0][2]
+        calibration_parameters.c_y = mtx[1][2]
+        # calibration_parameters.s_x = mtx[0][1]
+        # calibration_parameters.s_y = mtx[1][1]
+        # distortion coefficients
+        calibration_parameters.k_1 = dist[0][0]
+        calibration_parameters.k_2 = dist[0][1]
+        calibration_parameters.p_1 = dist[0][2]
+        calibration_parameters.p_2 = dist[0][3]
+        calibration_parameters.k_3 = dist[0][4]
+        
+        # * extrinsic parameters
+        # R = rvecs[0]
+        # t = (tvecs[0][0][0], tvecs[0][0][1], tvecs[0][0][2])
+        
+        return calibration_parameters
 
-    return CalibrationParameters()
+    else:
+        print_red("Calibration failed")
+        raise ValueError("Calibration failed")
 
 
 def _calibrate_charuco(settings: CharucoCalibrationSettings, frames: list) -> CalibrationParameters:
@@ -200,9 +288,59 @@ def _calibrate_charuco(settings: CharucoCalibrationSettings, frames: list) -> Ca
     if frames is None:
         raise ValueError("Frames must not be None")
 
-    # todo
+    # calibration with cv2
+    board = cv2.aruco.CharucoBoard_create(
+        squaresX=settings.marker_no[0],
+        squaresY=settings.marker_no[1],
+        squareLength=settings.marker_size*2,
+        markerLength=settings.marker_size,
+        dictionary=settings.get_marker_dict()
+    )
+    
+    gray_frames = [cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) for frame in frames]
+        
+    allCorners = []
+    allIds = []
+    decimator = 0
+    for gray in gray_frames:
 
-    return CalibrationParameters()
+        res = cv2.aruco.detectMarkers(gray,settings.get_marker_dict())
+
+        if len(res[0])>0:
+            res2 = cv2.aruco.interpolateCornersCharuco(res[0],res[1],gray,board)
+            if res2[1] is not None and res2[2] is not None and len(res2[1])>3 and decimator%3==0:
+                allCorners.append(res2[1])
+                allIds.append(res2[2])
+
+            cv2.aruco.drawDetectedMarkers(gray,res[0],res[1])
+        decimator+=1
+
+    imsize = gray_frames[0].shape
+
+    try:
+        cal = cv2.aruco.calibrateCameraCharuco(allCorners,allIds,board,imsize,None,None)
+        
+        calibration_parameters = CalibrationParameters()
+        calibration_parameters.f_x = cal[1][0][0]
+        calibration_parameters.f_y = cal[1][1][1]
+        calibration_parameters.c_x = cal[1][0][2]
+        calibration_parameters.c_y = cal[1][1][2]
+        # calibration_parameters.s_x = cal[1][0][1]
+        # calibration_parameters.s_y = cal[1][1][1]
+        calibration_parameters.k_1 = cal[2][0][0]
+        calibration_parameters.k_2 = cal[2][0][1]
+        calibration_parameters.p_1 = cal[2][0][2]
+        calibration_parameters.p_2 = cal[2][0][3]
+        calibration_parameters.k_3 = cal[2][0][4]
+        calibration_parameters.R = cal[3]
+        calibration_parameters.t = cal[4]
+        
+        return calibration_parameters
+    
+        
+    except cv2.error as e:
+        print_red("Calibration failed")
+        raise e
 
 
 def _print_chessboard_corners(settings: ChessboardCalibrationSettings, frame):
@@ -220,12 +358,12 @@ def _print_chessboard_corners(settings: ChessboardCalibrationSettings, frame):
     """
 
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    print_frame = frame.copy()
 
-    ret, corners = cv2.findChessboardCorners(gray, settings.board_size, None)
+    ret, corners = cv2.findChessboardCorners(gray, list((i-1 for i in settings.board_size)), None)
 
     if ret:
-        cv2.drawChessboardCorners(frame, settings.board_size, corners, ret)
-        return frame
+        return cv2.drawChessboardCorners(print_frame, list((i-1 for i in settings.board_size)), corners, ret)
     else:
         raise RuntimeError("Chessboard corners not found")
 
@@ -245,14 +383,13 @@ def _print_charuco_corners(settings: CharucoCalibrationSettings, frame):
     """
 
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
-    ret, corners = cv2.findChessboardCorners(gray, settings.board_size, None)
-
-    if ret:
-        cv2.drawChessboardCorners(frame, settings.board_size, corners, ret)
-        return frame
-    else:
-        raise RuntimeError("Charuco corners not found")
+    painted_frame = frame.copy()
+    board = cv2.aruco.CharucoBoard_create(settings.marker_no[0], settings.marker_no[1], settings.marker_size*2, settings.marker_size, settings.get_marker_dict())
+    res = cv2.aruco.detectMarkers(gray, settings.get_marker_dict())
+    res2 = cv2.aruco.interpolateCornersCharuco(res[0], res[1], gray, board)
+    cv2.aruco.drawDetectedCornersCharuco(painted_frame, res2[1], res2[2])
+    cv2.aruco.drawDetectedMarkers(painted_frame, res[0], res[1])
+    return painted_frame
 
 
 class CameraCalibrator():

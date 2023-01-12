@@ -50,9 +50,9 @@ if args.size is not None:
     if args.size < 5:
         print_red("Square size must be greater than 5cm")
         exit()
-    square_size = args.size
+    square_size = args.size * 10 # in mm
 else:
-    square_size = 10            # in cm
+    square_size = 100            # in mm
 
 if args.vertical is None and args.horizontal is None:
     marker_no = (5, 5)
