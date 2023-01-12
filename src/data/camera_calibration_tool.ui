@@ -103,14 +103,14 @@
                    </property>
                    <property name="minimumSize">
                     <size>
-                     <width>0</width>
+                     <width>25</width>
                      <height>25</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>16777215</width>
-                     <height>23</height>
+                     <width>25</width>
+                     <height>25</height>
                     </size>
                    </property>
                    <property name="statusTip">
@@ -159,6 +159,9 @@
                      <width>23</width>
                      <height>23</height>
                     </size>
+                   </property>
+                   <property name="statusTip">
+                    <string>Activate image saving</string>
                    </property>
                    <property name="text">
                     <string/>
@@ -241,6 +244,9 @@
                  </property>
                  <item row="2" column="0">
                   <widget class="QPushButton" name="pushButton_start_autotimer">
+                   <property name="statusTip">
+                    <string>Start / Stop the self timer</string>
+                   </property>
                    <property name="text">
                     <string>Start Self Timer</string>
                    </property>
@@ -286,6 +292,9 @@
                      <width>100</width>
                      <height>16777215</height>
                     </size>
+                   </property>
+                   <property name="statusTip">
+                    <string>Sleep time between images</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -341,7 +350,7 @@
               <item>
                <widget class="QGroupBox" name="groupBox_6">
                 <property name="title">
-                 <string>ManualCapture</string>
+                 <string>Manual Capture</string>
                 </property>
                 <layout class="QHBoxLayout" name="_2">
                  <item>
@@ -444,6 +453,9 @@
             <layout class="QHBoxLayout" name="horizontalLayout_delete_buttons">
              <item>
               <widget class="QPushButton" name="pushButton_delete_last">
+               <property name="statusTip">
+                <string>Delete last image from the image list</string>
+               </property>
                <property name="text">
                 <string>Delete Last</string>
                </property>
@@ -451,6 +463,9 @@
              </item>
              <item>
               <widget class="QPushButton" name="pushButton_delete_all">
+               <property name="statusTip">
+                <string>Delete all images from the image list</string>
+               </property>
                <property name="text">
                 <string>Delete All</string>
                </property>
@@ -550,8 +565,11 @@
            </item>
            <item row="0" column="0">
             <widget class="QTabWidget" name="tabWidget_calibration">
+             <property name="statusTip">
+              <string>Horizontal number of sqares (white and black) on the calibration body</string>
+             </property>
              <property name="currentIndex">
-              <number>0</number>
+              <number>1</number>
              </property>
              <widget class="QWidget" name="tab_chessboard">
               <attribute name="title">
@@ -577,6 +595,9 @@
                    </item>
                    <item>
                     <widget class="QDoubleSpinBox" name="doubleSpinBox_sqare_size">
+                     <property name="statusTip">
+                      <string>Side length a chessboard sqare in cm</string>
+                     </property>
                      <property name="suffix">
                       <string> cm</string>
                      </property>
@@ -618,6 +639,9 @@
                    </item>
                    <item>
                     <widget class="QSpinBox" name="spinBox_chessboard_no_squares_h">
+                     <property name="statusTip">
+                      <string>Horizontal number of sqares (white and black) on the calibration body</string>
+                     </property>
                      <property name="minimum">
                       <number>5</number>
                      </property>
@@ -638,6 +662,9 @@
                    </item>
                    <item>
                     <widget class="QSpinBox" name="spinBox_chessboard_no_squares_v">
+                     <property name="statusTip">
+                      <string>Vertical number of sqares (white and black) on the calibration body</string>
+                     </property>
                      <property name="minimum">
                       <number>5</number>
                      </property>
@@ -656,8 +683,11 @@
               <layout class="QGridLayout" name="gridLayout_13">
                <item row="0" column="0">
                 <widget class="QLabel" name="label">
+                 <property name="statusTip">
+                  <string>Size of a aruco marker in cm</string>
+                 </property>
                  <property name="text">
-                  <string>Sqare size</string>
+                  <string>Marker size</string>
                  </property>
                 </widget>
                </item>
@@ -685,6 +715,9 @@
                  </item>
                  <item>
                   <widget class="QSpinBox" name="spinBox_charuco_no_markers_h">
+                   <property name="statusTip">
+                    <string>Horizontal number of markers on the calibration body</string>
+                   </property>
                    <property name="minimum">
                     <number>5</number>
                    </property>
@@ -699,6 +732,9 @@
                  </item>
                  <item>
                   <widget class="QSpinBox" name="spinBox_charuco_no_markers_v">
+                   <property name="statusTip">
+                    <string>Vertical number of markers on the calibration body</string>
+                   </property>
                    <property name="minimum">
                     <number>5</number>
                    </property>
@@ -708,6 +744,9 @@
                </item>
                <item row="3" column="1">
                 <widget class="QComboBox" name="comboBox_marker_dict">
+                 <property name="statusTip">
+                  <string>CV Aruco Dictionary (4x4 represents the number of pixels)</string>
+                 </property>
                  <property name="currentText">
                   <string/>
                  </property>
@@ -822,6 +861,9 @@
                  </item>
                  <item>
                   <widget class="QDoubleSpinBox" name="doubleSpinBox_marker_size">
+                   <property name="statusTip">
+                    <string>Side length of an aruco marker in cm</string>
+                   </property>
                    <property name="suffix">
                     <string> cm</string>
                    </property>
@@ -886,11 +928,14 @@
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>291</height>
+                 <height>280</height>
                 </size>
                </property>
                <property name="accessibleDescription">
                 <string>hello</string>
+               </property>
+               <property name="sizeAdjustPolicy">
+                <enum>QAbstractScrollArea::AdjustToContents</enum>
                </property>
                <property name="selectionMode">
                 <enum>QAbstractItemView::SingleSelection</enum>
@@ -909,27 +954,17 @@
                </attribute>
                <row>
                 <property name="text">
-                 <string>f</string>
+                 <string>Parameter</string>
                 </property>
                </row>
                <row>
                 <property name="text">
-                 <string>s_x</string>
+                 <string>(f_x, f_y)</string>
                 </property>
                </row>
                <row>
                 <property name="text">
-                 <string>s_y</string>
-                </property>
-               </row>
-               <row>
-                <property name="text">
-                 <string>c_x</string>
-                </property>
-               </row>
-               <row>
-                <property name="text">
-                 <string>c_y</string>
+                 <string>(c_x,c_y)</string>
                 </property>
                </row>
                <row>
@@ -944,25 +979,27 @@
                </row>
                <row>
                 <property name="text">
-                 <string>R</string>
+                 <string>p_1</string>
                 </property>
                </row>
                <row>
                 <property name="text">
-                 <string>t</string>
+                 <string>p_2</string>
+                </property>
+               </row>
+               <row>
+                <property name="text">
+                 <string>k_3</string>
                 </property>
                </row>
                <column>
                 <property name="text">
-                 <string>Value</string>
+                 <string/>
                 </property>
                </column>
                <item row="0" column="0">
                 <property name="text">
-                 <string/>
-                </property>
-                <property name="flags">
-                 <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+                 <string>Value</string>
                 </property>
                </item>
                <item row="1" column="0">
@@ -1001,27 +1038,6 @@
                 <property name="text">
                  <string/>
                 </property>
-                <property name="flags">
-                 <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-                </property>
-               </item>
-               <item row="6" column="0">
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="flags">
-                 <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-                </property>
-               </item>
-               <item row="7" column="0">
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="flags">
-                 <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-                </property>
-               </item>
-               <item row="8" column="0">
                 <property name="flags">
                  <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
                 </property>

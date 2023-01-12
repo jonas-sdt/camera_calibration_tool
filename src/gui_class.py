@@ -19,7 +19,7 @@ class Ui_MainWindow(object):
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(1488, 919)
         icon = QIcon()
-        icon.addFile(u"src/data/app_icon.svg", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u"app_icon.svg", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setAutoFillBackground(False)
         MainWindow.setStyleSheet(u"")
@@ -62,10 +62,10 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.pushButton_camera_search.sizePolicy().hasHeightForWidth())
         self.pushButton_camera_search.setSizePolicy(sizePolicy)
-        self.pushButton_camera_search.setMinimumSize(QSize(0, 25))
-        self.pushButton_camera_search.setMaximumSize(QSize(16777215, 23))
+        self.pushButton_camera_search.setMinimumSize(QSize(25, 25))
+        self.pushButton_camera_search.setMaximumSize(QSize(25, 25))
         icon1 = QIcon()
-        icon1.addFile(u"src/data/refresh_icon.svg", QSize(), QIcon.Normal, QIcon.Off)
+        icon1.addFile(u"refresh_icon.svg", QSize(), QIcon.Normal, QIcon.Off)
         self.pushButton_camera_search.setIcon(icon1)
 
         self.gridLayout_2.addWidget(self.pushButton_camera_search, 0, 1, 1, 1)
@@ -169,7 +169,7 @@ class Ui_MainWindow(object):
         self.pushButton_capture = QPushButton(self.groupBox_6)
         self.pushButton_capture.setObjectName(u"pushButton_capture")
         icon2 = QIcon()
-        icon2.addFile(u"src/data/save_icon.svg", QSize(), QIcon.Normal, QIcon.On)
+        icon2.addFile(u"save_icon.svg", QSize(), QIcon.Normal, QIcon.On)
         self.pushButton_capture.setIcon(icon2)
 
         self._2.addWidget(self.pushButton_capture)
@@ -457,8 +457,8 @@ class Ui_MainWindow(object):
             self.tableWidget_parameters.setColumnCount(1)
         __qtablewidgetitem = QTableWidgetItem()
         self.tableWidget_parameters.setHorizontalHeaderItem(0, __qtablewidgetitem)
-        if (self.tableWidget_parameters.rowCount() < 9):
-            self.tableWidget_parameters.setRowCount(9)
+        if (self.tableWidget_parameters.rowCount() < 8):
+            self.tableWidget_parameters.setRowCount(8)
         __qtablewidgetitem1 = QTableWidgetItem()
         self.tableWidget_parameters.setVerticalHeaderItem(0, __qtablewidgetitem1)
         __qtablewidgetitem2 = QTableWidgetItem()
@@ -476,41 +476,30 @@ class Ui_MainWindow(object):
         __qtablewidgetitem8 = QTableWidgetItem()
         self.tableWidget_parameters.setVerticalHeaderItem(7, __qtablewidgetitem8)
         __qtablewidgetitem9 = QTableWidgetItem()
-        self.tableWidget_parameters.setVerticalHeaderItem(8, __qtablewidgetitem9)
+        self.tableWidget_parameters.setItem(0, 0, __qtablewidgetitem9)
         __qtablewidgetitem10 = QTableWidgetItem()
         __qtablewidgetitem10.setFlags(Qt.ItemIsSelectable|Qt.ItemIsDragEnabled|Qt.ItemIsDropEnabled|Qt.ItemIsUserCheckable|Qt.ItemIsEnabled);
-        self.tableWidget_parameters.setItem(0, 0, __qtablewidgetitem10)
+        self.tableWidget_parameters.setItem(1, 0, __qtablewidgetitem10)
         __qtablewidgetitem11 = QTableWidgetItem()
         __qtablewidgetitem11.setFlags(Qt.ItemIsSelectable|Qt.ItemIsDragEnabled|Qt.ItemIsDropEnabled|Qt.ItemIsUserCheckable|Qt.ItemIsEnabled);
-        self.tableWidget_parameters.setItem(1, 0, __qtablewidgetitem11)
+        self.tableWidget_parameters.setItem(2, 0, __qtablewidgetitem11)
         __qtablewidgetitem12 = QTableWidgetItem()
         __qtablewidgetitem12.setFlags(Qt.ItemIsSelectable|Qt.ItemIsDragEnabled|Qt.ItemIsDropEnabled|Qt.ItemIsUserCheckable|Qt.ItemIsEnabled);
-        self.tableWidget_parameters.setItem(2, 0, __qtablewidgetitem12)
+        self.tableWidget_parameters.setItem(3, 0, __qtablewidgetitem12)
         __qtablewidgetitem13 = QTableWidgetItem()
         __qtablewidgetitem13.setFlags(Qt.ItemIsSelectable|Qt.ItemIsDragEnabled|Qt.ItemIsDropEnabled|Qt.ItemIsUserCheckable|Qt.ItemIsEnabled);
-        self.tableWidget_parameters.setItem(3, 0, __qtablewidgetitem13)
+        self.tableWidget_parameters.setItem(4, 0, __qtablewidgetitem13)
         __qtablewidgetitem14 = QTableWidgetItem()
         __qtablewidgetitem14.setFlags(Qt.ItemIsSelectable|Qt.ItemIsDragEnabled|Qt.ItemIsDropEnabled|Qt.ItemIsUserCheckable|Qt.ItemIsEnabled);
-        self.tableWidget_parameters.setItem(4, 0, __qtablewidgetitem14)
-        __qtablewidgetitem15 = QTableWidgetItem()
-        __qtablewidgetitem15.setFlags(Qt.ItemIsSelectable|Qt.ItemIsDragEnabled|Qt.ItemIsDropEnabled|Qt.ItemIsUserCheckable|Qt.ItemIsEnabled);
-        self.tableWidget_parameters.setItem(5, 0, __qtablewidgetitem15)
-        __qtablewidgetitem16 = QTableWidgetItem()
-        __qtablewidgetitem16.setFlags(Qt.ItemIsSelectable|Qt.ItemIsDragEnabled|Qt.ItemIsDropEnabled|Qt.ItemIsUserCheckable|Qt.ItemIsEnabled);
-        self.tableWidget_parameters.setItem(6, 0, __qtablewidgetitem16)
-        __qtablewidgetitem17 = QTableWidgetItem()
-        __qtablewidgetitem17.setFlags(Qt.ItemIsSelectable|Qt.ItemIsDragEnabled|Qt.ItemIsDropEnabled|Qt.ItemIsUserCheckable|Qt.ItemIsEnabled);
-        self.tableWidget_parameters.setItem(7, 0, __qtablewidgetitem17)
-        __qtablewidgetitem18 = QTableWidgetItem()
-        __qtablewidgetitem18.setFlags(Qt.ItemIsSelectable|Qt.ItemIsDragEnabled|Qt.ItemIsDropEnabled|Qt.ItemIsUserCheckable|Qt.ItemIsEnabled);
-        self.tableWidget_parameters.setItem(8, 0, __qtablewidgetitem18)
+        self.tableWidget_parameters.setItem(5, 0, __qtablewidgetitem14)
         self.tableWidget_parameters.setObjectName(u"tableWidget_parameters")
         sizePolicy4 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy4.setHorizontalStretch(0)
         sizePolicy4.setVerticalStretch(0)
         sizePolicy4.setHeightForWidth(self.tableWidget_parameters.sizePolicy().hasHeightForWidth())
         self.tableWidget_parameters.setSizePolicy(sizePolicy4)
-        self.tableWidget_parameters.setMinimumSize(QSize(0, 291))
+        self.tableWidget_parameters.setMinimumSize(QSize(0, 280))
+        self.tableWidget_parameters.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
         self.tableWidget_parameters.setSelectionMode(QAbstractItemView.SingleSelection)
         self.tableWidget_parameters.setGridStyle(Qt.SolidLine)
         self.tableWidget_parameters.horizontalHeader().setCascadingSectionResizes(False)
@@ -522,8 +511,8 @@ class Ui_MainWindow(object):
         self.pushButton_save_param = QPushButton(self.groupBox_calibration)
         self.pushButton_save_param.setObjectName(u"pushButton_save_param")
         icon3 = QIcon()
-        icon3.addFile(u"src/data/save_icon.svg", QSize(), QIcon.Normal, QIcon.Off)
-        icon3.addFile(u"src/data/save_icon.svg", QSize(), QIcon.Normal, QIcon.On)
+        icon3.addFile(u"data/save_icon.svg", QSize(), QIcon.Normal, QIcon.Off)
+        icon3.addFile(u"save_icon.svg", QSize(), QIcon.Normal, QIcon.On)
         self.pushButton_save_param.setIcon(icon3)
 
         self.verticalLayout_calibration.addWidget(self.pushButton_save_param)
@@ -552,7 +541,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
 
         self.tabWidget_source.setCurrentIndex(0)
-        self.tabWidget_calibration.setCurrentIndex(0)
+        self.tabWidget_calibration.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -575,6 +564,9 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(statustip)
         self.pushButton_camera_search.setText("")
         self.groupBox_4.setTitle(QCoreApplication.translate("MainWindow", u"Save Images", None))
+#if QT_CONFIG(statustip)
+        self.checkBox_save_images.setStatusTip(QCoreApplication.translate("MainWindow", u"Activate image saving", None))
+#endif // QT_CONFIG(statustip)
         self.checkBox_save_images.setText("")
 #if QT_CONFIG(statustip)
         self.lineEdit_path.setStatusTip(QCoreApplication.translate("MainWindow", u"Path to folder images will be saved to", None))
@@ -587,10 +579,16 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(statustip)
         self.pushButton_path_window.setText(QCoreApplication.translate("MainWindow", u"Select path", None))
         self.groupBox_5.setTitle(QCoreApplication.translate("MainWindow", u"Self Timer", None))
+#if QT_CONFIG(statustip)
+        self.pushButton_start_autotimer.setStatusTip(QCoreApplication.translate("MainWindow", u"Start / Stop the self timer", None))
+#endif // QT_CONFIG(statustip)
         self.pushButton_start_autotimer.setText(QCoreApplication.translate("MainWindow", u"Start Self Timer", None))
         self.label_delay_seconds.setText(QCoreApplication.translate("MainWindow", u"Delay:", None))
         self.label_img_no.setText(QCoreApplication.translate("MainWindow", u"Number of Images:", None))
         self.progressBar_img_cnt.setFormat(QCoreApplication.translate("MainWindow", u"%v", None))
+#if QT_CONFIG(statustip)
+        self.spinBox_delay_seconds.setStatusTip(QCoreApplication.translate("MainWindow", u"Sleep time between images", None))
+#endif // QT_CONFIG(statustip)
         self.spinBox_delay_seconds.setSuffix(QCoreApplication.translate("MainWindow", u"s", None))
 #if QT_CONFIG(statustip)
         self.spinBox_img_no.setStatusTip(QCoreApplication.translate("MainWindow", u"Select number of images to take", None))
@@ -611,7 +609,13 @@ class Ui_MainWindow(object):
         self.pushButton_select_images.setText(QCoreApplication.translate("MainWindow", u"Select files", None))
         self.tabWidget_source.setTabText(self.tabWidget_source.indexOf(self.FromFileTab), QCoreApplication.translate("MainWindow", u"From Files", None))
         self.groupBox_images.setTitle(QCoreApplication.translate("MainWindow", u"Images", None))
+#if QT_CONFIG(statustip)
+        self.pushButton_delete_last.setStatusTip(QCoreApplication.translate("MainWindow", u"Delete last image from the image list", None))
+#endif // QT_CONFIG(statustip)
         self.pushButton_delete_last.setText(QCoreApplication.translate("MainWindow", u"Delete Last", None))
+#if QT_CONFIG(statustip)
+        self.pushButton_delete_all.setStatusTip(QCoreApplication.translate("MainWindow", u"Delete all images from the image list", None))
+#endif // QT_CONFIG(statustip)
         self.pushButton_delete_all.setText(QCoreApplication.translate("MainWindow", u"Delete All", None))
 #if QT_CONFIG(statustip)
         self.groupBox_Video.setStatusTip("")
@@ -619,14 +623,35 @@ class Ui_MainWindow(object):
         self.groupBox_Video.setTitle(QCoreApplication.translate("MainWindow", u"Video", None))
         self.cameraView.setText("")
         self.groupBox_chessboard.setTitle(QCoreApplication.translate("MainWindow", u"Calibration Body Specification", None))
+#if QT_CONFIG(statustip)
+        self.tabWidget_calibration.setStatusTip(QCoreApplication.translate("MainWindow", u"Horizontal number of sqares (white and black) on the calibration body", None))
+#endif // QT_CONFIG(statustip)
+#if QT_CONFIG(statustip)
+        self.doubleSpinBox_sqare_size.setStatusTip(QCoreApplication.translate("MainWindow", u"Side length a chessboard sqare in cm", None))
+#endif // QT_CONFIG(statustip)
         self.doubleSpinBox_sqare_size.setSuffix(QCoreApplication.translate("MainWindow", u" cm", None))
         self.label_square_size.setText(QCoreApplication.translate("MainWindow", u"Square Size:", None))
         self.label_square_no.setText(QCoreApplication.translate("MainWindow", u"Number of Squares (h x v):", None))
+#if QT_CONFIG(statustip)
+        self.spinBox_chessboard_no_squares_h.setStatusTip(QCoreApplication.translate("MainWindow", u"Horizontal number of sqares (white and black) on the calibration body", None))
+#endif // QT_CONFIG(statustip)
         self.label_x.setText(QCoreApplication.translate("MainWindow", u"x", None))
+#if QT_CONFIG(statustip)
+        self.spinBox_chessboard_no_squares_v.setStatusTip(QCoreApplication.translate("MainWindow", u"Vertical number of sqares (white and black) on the calibration body", None))
+#endif // QT_CONFIG(statustip)
         self.tabWidget_calibration.setTabText(self.tabWidget_calibration.indexOf(self.tab_chessboard), QCoreApplication.translate("MainWindow", u"Chessboard", None))
-        self.label.setText(QCoreApplication.translate("MainWindow", u"Sqare size", None))
+#if QT_CONFIG(statustip)
+        self.label.setStatusTip(QCoreApplication.translate("MainWindow", u"Size of a aruco marker in cm", None))
+#endif // QT_CONFIG(statustip)
+        self.label.setText(QCoreApplication.translate("MainWindow", u"Marker size", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"Number of Markers (h x v)", None))
+#if QT_CONFIG(statustip)
+        self.spinBox_charuco_no_markers_h.setStatusTip(QCoreApplication.translate("MainWindow", u"Horizontal number of markers on the calibration body", None))
+#endif // QT_CONFIG(statustip)
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"x", None))
+#if QT_CONFIG(statustip)
+        self.spinBox_charuco_no_markers_v.setStatusTip(QCoreApplication.translate("MainWindow", u"Vertical number of markers on the calibration body", None))
+#endif // QT_CONFIG(statustip)
         self.comboBox_marker_dict.setItemText(0, "")
         self.comboBox_marker_dict.setItemText(1, QCoreApplication.translate("MainWindow", u"DICT_4X4_50", None))
         self.comboBox_marker_dict.setItemText(2, QCoreApplication.translate("MainWindow", u"DICT_4X4_100", None))
@@ -645,8 +670,14 @@ class Ui_MainWindow(object):
         self.comboBox_marker_dict.setItemText(15, QCoreApplication.translate("MainWindow", u"DICT_7X7_250", None))
         self.comboBox_marker_dict.setItemText(16, QCoreApplication.translate("MainWindow", u"DICT_7X7_1000", None))
 
+#if QT_CONFIG(statustip)
+        self.comboBox_marker_dict.setStatusTip(QCoreApplication.translate("MainWindow", u"CV Aruco Dictionary (4x4 represents the number of pixels)", None))
+#endif // QT_CONFIG(statustip)
         self.comboBox_marker_dict.setCurrentText("")
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"Marker Dictionary", None))
+#if QT_CONFIG(statustip)
+        self.doubleSpinBox_marker_size.setStatusTip(QCoreApplication.translate("MainWindow", u"Side length of an aruco marker in cm", None))
+#endif // QT_CONFIG(statustip)
         self.doubleSpinBox_marker_size.setSuffix(QCoreApplication.translate("MainWindow", u" cm", None))
         self.tabWidget_calibration.setTabText(self.tabWidget_calibration.indexOf(self.tab_charuco), QCoreApplication.translate("MainWindow", u"Charuco", None))
         self.groupBox_calibration.setTitle(QCoreApplication.translate("MainWindow", u"Calibration", None))
@@ -654,29 +685,27 @@ class Ui_MainWindow(object):
         self.pushButton_determ_param.setStatusTip(QCoreApplication.translate("MainWindow", u"Calculate camera paramters from calibration images", None))
 #endif // QT_CONFIG(statustip)
         self.pushButton_determ_param.setText(QCoreApplication.translate("MainWindow", u"Calculate Parameters", None))
-        ___qtablewidgetitem = self.tableWidget_parameters.horizontalHeaderItem(0)
-        ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"Value", None));
-        ___qtablewidgetitem1 = self.tableWidget_parameters.verticalHeaderItem(0)
-        ___qtablewidgetitem1.setText(QCoreApplication.translate("MainWindow", u"f", None));
-        ___qtablewidgetitem2 = self.tableWidget_parameters.verticalHeaderItem(1)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("MainWindow", u"s_x", None));
-        ___qtablewidgetitem3 = self.tableWidget_parameters.verticalHeaderItem(2)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("MainWindow", u"s_y", None));
-        ___qtablewidgetitem4 = self.tableWidget_parameters.verticalHeaderItem(3)
-        ___qtablewidgetitem4.setText(QCoreApplication.translate("MainWindow", u"c_x", None));
-        ___qtablewidgetitem5 = self.tableWidget_parameters.verticalHeaderItem(4)
-        ___qtablewidgetitem5.setText(QCoreApplication.translate("MainWindow", u"c_y", None));
-        ___qtablewidgetitem6 = self.tableWidget_parameters.verticalHeaderItem(5)
-        ___qtablewidgetitem6.setText(QCoreApplication.translate("MainWindow", u"k_1", None));
-        ___qtablewidgetitem7 = self.tableWidget_parameters.verticalHeaderItem(6)
-        ___qtablewidgetitem7.setText(QCoreApplication.translate("MainWindow", u"k_2", None));
-        ___qtablewidgetitem8 = self.tableWidget_parameters.verticalHeaderItem(7)
-        ___qtablewidgetitem8.setText(QCoreApplication.translate("MainWindow", u"R", None));
-        ___qtablewidgetitem9 = self.tableWidget_parameters.verticalHeaderItem(8)
-        ___qtablewidgetitem9.setText(QCoreApplication.translate("MainWindow", u"t", None));
+        ___qtablewidgetitem = self.tableWidget_parameters.verticalHeaderItem(0)
+        ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"Parameter", None));
+        ___qtablewidgetitem1 = self.tableWidget_parameters.verticalHeaderItem(1)
+        ___qtablewidgetitem1.setText(QCoreApplication.translate("MainWindow", u"(f_x, f_y)", None));
+        ___qtablewidgetitem2 = self.tableWidget_parameters.verticalHeaderItem(2)
+        ___qtablewidgetitem2.setText(QCoreApplication.translate("MainWindow", u"(c_x,c_y)", None));
+        ___qtablewidgetitem3 = self.tableWidget_parameters.verticalHeaderItem(3)
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("MainWindow", u"k_1", None));
+        ___qtablewidgetitem4 = self.tableWidget_parameters.verticalHeaderItem(4)
+        ___qtablewidgetitem4.setText(QCoreApplication.translate("MainWindow", u"k_2", None));
+        ___qtablewidgetitem5 = self.tableWidget_parameters.verticalHeaderItem(5)
+        ___qtablewidgetitem5.setText(QCoreApplication.translate("MainWindow", u"p_1", None));
+        ___qtablewidgetitem6 = self.tableWidget_parameters.verticalHeaderItem(6)
+        ___qtablewidgetitem6.setText(QCoreApplication.translate("MainWindow", u"p_2", None));
+        ___qtablewidgetitem7 = self.tableWidget_parameters.verticalHeaderItem(7)
+        ___qtablewidgetitem7.setText(QCoreApplication.translate("MainWindow", u"k_3", None));
 
         __sortingEnabled = self.tableWidget_parameters.isSortingEnabled()
         self.tableWidget_parameters.setSortingEnabled(False)
+        ___qtablewidgetitem8 = self.tableWidget_parameters.item(0, 0)
+        ___qtablewidgetitem8.setText(QCoreApplication.translate("MainWindow", u"Value", None));
         self.tableWidget_parameters.setSortingEnabled(__sortingEnabled)
 
 #if QT_CONFIG(accessibility)
