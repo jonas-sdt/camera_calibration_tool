@@ -511,5 +511,7 @@ class GUI(QtWidgets.QMainWindow):
         """Event handler for: pushButton_save_param if pushed
         """
         path = QtWidgets.QFileDialog.getSaveFileName(self, "Save Parameters", "", "Parameter Files (*.json)")[0]
-        save_config(path, self.calibration_parameters)
+        # if path doesn't end with .yaml, add it
+        path = path if path.endswith(".json") else path + ".json"
+        save_config(self.calibration_parameters, path)
     
