@@ -19,7 +19,7 @@ class Ui_MainWindow(object):
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(1488, 919)
         icon = QIcon()
-        icon.addFile(u"app_icon.svg", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u"src/data/app_icon.svg", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setAutoFillBackground(False)
         MainWindow.setStyleSheet(u"")
@@ -65,7 +65,7 @@ class Ui_MainWindow(object):
         self.pushButton_camera_search.setMinimumSize(QSize(25, 25))
         self.pushButton_camera_search.setMaximumSize(QSize(25, 25))
         icon1 = QIcon()
-        icon1.addFile(u"refresh_icon.svg", QSize(), QIcon.Normal, QIcon.Off)
+        icon1.addFile(u"src/data/refresh_icon.svg", QSize(), QIcon.Normal, QIcon.Off)
         self.pushButton_camera_search.setIcon(icon1)
 
         self.gridLayout_2.addWidget(self.pushButton_camera_search, 0, 1, 1, 1)
@@ -169,7 +169,7 @@ class Ui_MainWindow(object):
         self.pushButton_capture = QPushButton(self.groupBox_6)
         self.pushButton_capture.setObjectName(u"pushButton_capture")
         icon2 = QIcon()
-        icon2.addFile(u"save_icon.svg", QSize(), QIcon.Normal, QIcon.On)
+        icon2.addFile(u"src/data/save_icon.svg", QSize(), QIcon.Normal, QIcon.On)
         self.pushButton_capture.setIcon(icon2)
 
         self._2.addWidget(self.pushButton_capture)
@@ -511,8 +511,8 @@ class Ui_MainWindow(object):
         self.pushButton_save_param = QPushButton(self.groupBox_calibration)
         self.pushButton_save_param.setObjectName(u"pushButton_save_param")
         icon3 = QIcon()
-        icon3.addFile(u"data/save_icon.svg", QSize(), QIcon.Normal, QIcon.Off)
-        icon3.addFile(u"save_icon.svg", QSize(), QIcon.Normal, QIcon.On)
+        icon3.addFile(u"src/data/save_icon.svg", QSize(), QIcon.Normal, QIcon.Off)
+        icon3.addFile(u"src/data/save_icon.svg", QSize(), QIcon.Normal, QIcon.On)
         self.pushButton_save_param.setIcon(icon3)
 
         self.verticalLayout_calibration.addWidget(self.pushButton_save_param)
