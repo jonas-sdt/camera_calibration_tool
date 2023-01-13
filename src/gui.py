@@ -78,9 +78,13 @@ class GUI(QtWidgets.QMainWindow):
             self.ui.spinBox_charuco_no_markers_v.setValue(calibration_settings.marker_no[1])
             self.ui.comboBox_marker_dict.setCurrentText(calibration_settings.marker_dict)
 
+        # * set image dir
         self.ui.lineEdit_path.setText(image_dir)
+        
+        # * set calibration parameters
         self.calibration_parameters = calibration_parameters
         
+        # * search for cameras and fill combobox
         self.ui.pushButton_camera_search.click()
         
         # * start gui
@@ -185,8 +189,9 @@ class GUI(QtWidgets.QMainWindow):
 
     def _initGUI(self):
         self.ui.comboBox_camera.setEnabled(True)
-        available_cameras = list_available_cameras([])
-        self.ui.comboBox_camera.addItems(available_cameras)
+        # ! Deactivate the camera selection for now
+        # available_cameras = list_available_cameras([])
+        # self.ui.comboBox_camera.addItems(available_cameras)
     
     def _stateCameraNotSelected(self):
         self.stop_capture = True

@@ -38,7 +38,7 @@ parser.add_argument('-m','--marker_dict', type=int, help="""Index of charuco mar
 
 args = parser.parse_args()
 
-print("Camera Calibration Tool\n")
+print_blue("Camera Calibration Tool\n")
 
 # * Read command line arguments
 if args.image_dir is not None:
