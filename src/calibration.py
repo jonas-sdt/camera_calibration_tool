@@ -1,10 +1,15 @@
+
+# ┌────────────────────────────────────────────────────────────────────────────┐
+# │ functions and classes for image processing with opencv                     │
+# └────────────────────────────────────────────────────────────────────────────┘
+ 
 import cv2
 import os
 import yaml
 import time
 import datetime
 import numpy as np
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 def print_red(string):
     print(f"\033[91m{string}\033[0m")
@@ -40,7 +45,7 @@ class CharucoCalibrationSettings():
                     14: cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_7X7_100),
                     15: cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_7X7_250),
                     16: cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_7X7_1000)}
-        return markers.get(self.marker_dict, "Invalid marker dictionary")
+        return markers.get(self._marker_dict, "Invalid marker dictionary")
 
     marker_dict = property(get_marker_dict, set_marker_dict)
 

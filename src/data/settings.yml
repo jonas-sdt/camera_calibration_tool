@@ -1,0 +1,38 @@
+
+# ┌────────────────────────────────────────────────────────────────────────────┐
+# │ Settings file for camera calibration tool                                  │
+# └────────────────────────────────────────────────────────────────────────────┘
+
+# calibration body settings
+# chessboard
+board_size_h_default: 10
+board_size_v_default: 10
+board_size_h_min: 5
+board_size_v_min: 5
+board_size_h_max: 20
+board_size_v_max: 20
+
+square_size_default: 50.0
+square_size_min: 10.0
+square_size_max: 100.0
+
+# charuco
+marker_no_h_default: 10
+marker_no_v_default: 10
+marker_no_h_min: 5
+marker_no_v_min: 5
+marker_no_h_max: 20
+marker_no_v_max: 20
+
+marker_size_default: 50.0
+marker_size_min: 10.0
+marker_size_max: 100.0
+
+# self timer settings
+delay_seconds_default: 10
+delay_seconds_min: 1
+delay_seconds_max: 60
+
+img_no_default: 10
+img_no_min: 1
+img_no_max: 100

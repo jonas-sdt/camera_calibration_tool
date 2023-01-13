@@ -1,10 +1,19 @@
+
+# ┌────────────────────────────────────────────────────────────────────────────┐
+# │ init file for camera calibration tool                                      │
+# └────────────────────────────────────────────────────────────────────────────┘
+
 import gui
 import calibration
 import argparse
 import glob
 import cv2 as cv
 import os
-
+from yaml import load
+try:
+    from yaml import CLoader as Loader
+except ImportError:
+    from yaml import Loader
 
 def print_red(string):
     print(f"\033[91m{string}\033[0m")
@@ -38,7 +47,9 @@ parser.add_argument('-m','--marker_dict', type=int, help="""Index of charuco mar
 
 args = parser.parse_args()
 
-print_blue("Camera Calibration Tool\n")
+print_blue(f"\n{'Camera Calibration Tool':^80}\n")
+
+settings = load(open("src/data/settings.yml"), Loader=Loader)
 
 # * Read command line arguments
 if args.image_dir is not None:
@@ -52,14 +63,14 @@ if args.size is not None:
         exit()
     square_size = args.size * 10 # in mm
 else:
-    square_size = 100            # in mm
+    square_size = settings["square_size_default"]            # in mm
 
 if args.vertical is None and args.horizontal is None:
-    marker_no = (5, 5)
+    marker_no = (settings["marker_no_h_default"], settings["marker_no_v_default"])
     
 elif args.vertical is None or args.horizontal is None:
-    print_red("Vertical and horizontal number must be specified together")
-    marker_no = (5, 5)
+    print_red("Vertical and horizontal number must be specified together. Used default values.")
+    marker_no = (settings["marker_no_h_default"], settings["marker_no_v_default"])
 else:
     if args.vertical < 5 or args.horizontal < 5:
         print_red("Vertical/Horizontal number must be greater than 5")

@@ -1,20 +1,22 @@
-# -*- coding: utf-8 -*-
 
-################################################################################
-## Form generated from reading UI file 'camera_calibration_tool.ui'
-##
-## Created by: Qt User Interface Compiler version 5.15.6
-##
-## WARNING! All changes made in this file will be lost when recompiling UI file!
-################################################################################
+# ┌────────────────────────────────────────────────────────────────────────────┐
+# │ qt gui: static parts                                                       │
+# └────────────────────────────────────────────────────────────────────────────┘
 
 from PySide2.QtCore import *  # type: ignore
 from PySide2.QtGui import *  # type: ignore
 from PySide2.QtWidgets import *  # type: ignore
-
+from yaml import load
+try:
+    from yaml import CLoader as Loader
+except ImportError:
+    from yaml import Loader
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
+            
+        self.settings = load(open("src/data/settings.yml", "r"), Loader=Loader)
+            
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(1488, 919)
@@ -143,8 +145,9 @@ class Ui_MainWindow(object):
         self.spinBox_delay_seconds.setMaximumSize(QSize(100, 16777215))
         self.spinBox_delay_seconds.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
         self.spinBox_delay_seconds.setButtonSymbols(QAbstractSpinBox.UpDownArrows)
-        self.spinBox_delay_seconds.setMinimum(5)
-        self.spinBox_delay_seconds.setMaximum(60)
+        self.spinBox_delay_seconds.setMinimum(self.settings["delay_seconds_min"])
+        self.spinBox_delay_seconds.setMaximum(self.settings["delay_seconds_max"])
+        self.spinBox_delay_seconds.setValue(self.settings["delay_seconds_default"])
         self.spinBox_delay_seconds.setSingleStep(5)
 
         self.gridLayout_11.addWidget(self.spinBox_delay_seconds, 1, 1, 1, 1)
@@ -154,8 +157,9 @@ class Ui_MainWindow(object):
         self.spinBox_img_no.setMinimumSize(QSize(50, 0))
         self.spinBox_img_no.setMaximumSize(QSize(100, 16777215))
         self.spinBox_img_no.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-        self.spinBox_img_no.setMinimum(5)
-        self.spinBox_img_no.setValue(10)
+        self.spinBox_img_no.setMinimum(self.settings["img_no_min"])
+        self.spinBox_img_no.setMaximum(self.settings["img_no_max"])
+        self.spinBox_img_no.setValue(self.settings["img_no_default"])
 
         self.gridLayout_11.addWidget(self.spinBox_img_no, 0, 1, 1, 1)
 
@@ -301,7 +305,9 @@ class Ui_MainWindow(object):
 
         self.doubleSpinBox_sqare_size = QDoubleSpinBox(self.tab_chessboard)
         self.doubleSpinBox_sqare_size.setObjectName(u"doubleSpinBox_sqare_size")
-        self.doubleSpinBox_sqare_size.setMinimum(5.000000000000000)
+        self.doubleSpinBox_sqare_size.setMinimum(self.settings["square_size_min"]/10)
+        self.doubleSpinBox_sqare_size.setMaximum(self.settings["square_size_max"]/10)
+        self.doubleSpinBox_sqare_size.setValue(self.settings["square_size_default"]/10)
 
         self.horizontalLayout_7.addWidget(self.doubleSpinBox_sqare_size)
 
@@ -326,7 +332,9 @@ class Ui_MainWindow(object):
 
         self.spinBox_chessboard_no_squares_h = QSpinBox(self.tab_chessboard)
         self.spinBox_chessboard_no_squares_h.setObjectName(u"spinBox_chessboard_no_squares_h")
-        self.spinBox_chessboard_no_squares_h.setMinimum(5)
+        self.spinBox_chessboard_no_squares_h.setMinimum(self.settings["board_size_h_min"])
+        self.spinBox_chessboard_no_squares_h.setMaximum(self.settings["board_size_h_max"])
+        self.spinBox_chessboard_no_squares_h.setValue(self.settings["board_size_h_default"])
 
         self.horizontalLayout_8.addWidget(self.spinBox_chessboard_no_squares_h)
 
@@ -339,7 +347,9 @@ class Ui_MainWindow(object):
 
         self.spinBox_chessboard_no_squares_v = QSpinBox(self.tab_chessboard)
         self.spinBox_chessboard_no_squares_v.setObjectName(u"spinBox_chessboard_no_squares_v")
-        self.spinBox_chessboard_no_squares_v.setMinimum(5)
+        self.spinBox_chessboard_no_squares_v.setMinimum(self.settings["board_size_v_min"])
+        self.spinBox_chessboard_no_squares_v.setMaximum(self.settings["board_size_v_max"])
+        self.spinBox_chessboard_no_squares_v.setValue(self.settings["board_size_v_default"])
 
         self.horizontalLayout_8.addWidget(self.spinBox_chessboard_no_squares_v)
 
@@ -372,7 +382,9 @@ class Ui_MainWindow(object):
 
         self.spinBox_charuco_no_markers_h = QSpinBox(self.tab_charuco)
         self.spinBox_charuco_no_markers_h.setObjectName(u"spinBox_charuco_no_markers_h")
-        self.spinBox_charuco_no_markers_h.setMinimum(5)
+        self.spinBox_charuco_no_markers_h.setMinimum(self.settings["marker_no_h_min"])
+        self.spinBox_charuco_no_markers_h.setMaximum(self.settings["marker_no_h_max"])
+        self.spinBox_charuco_no_markers_h.setValue(self.settings["marker_no_h_default"])
 
         self.horizontalLayout_2.addWidget(self.spinBox_charuco_no_markers_h)
 
@@ -383,7 +395,9 @@ class Ui_MainWindow(object):
 
         self.spinBox_charuco_no_markers_v = QSpinBox(self.tab_charuco)
         self.spinBox_charuco_no_markers_v.setObjectName(u"spinBox_charuco_no_markers_v")
-        self.spinBox_charuco_no_markers_v.setMinimum(5)
+        self.spinBox_charuco_no_markers_v.setMinimum(self.settings["marker_no_v_min"])
+        self.spinBox_charuco_no_markers_v.setMaximum(self.settings["marker_no_v_max"])
+        self.spinBox_charuco_no_markers_v.setValue(self.settings["marker_no_v_default"])
 
         self.horizontalLayout_2.addWidget(self.spinBox_charuco_no_markers_v)
 
@@ -425,7 +439,9 @@ class Ui_MainWindow(object):
 
         self.doubleSpinBox_marker_size = QDoubleSpinBox(self.tab_charuco)
         self.doubleSpinBox_marker_size.setObjectName(u"doubleSpinBox_marker_size")
-        self.doubleSpinBox_marker_size.setMinimum(5.000000000000000)
+        self.doubleSpinBox_marker_size.setMinimum(self.settings["marker_size_min"]/10)
+        self.doubleSpinBox_marker_size.setMaximum(self.settings["marker_size_max"]/10)
+        self.doubleSpinBox_marker_size.setValue(self.settings["marker_size_default"]/10)
 
         self.horizontalLayout_3.addWidget(self.doubleSpinBox_marker_size)
 

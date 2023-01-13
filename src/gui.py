@@ -1,3 +1,8 @@
+
+# ┌────────────────────────────────────────────────────────────────────────────┐
+# │ qt gui: dynamic parts                                                      │
+# └────────────────────────────────────────────────────────────────────────────┘
+
 from gui_class import Ui_MainWindow
 from PySide2 import QtWidgets, QtCore, QtGui
 from PySide2.QtCore import QRunnable, Slot, QThreadPool
@@ -7,10 +12,12 @@ from calibration import *
 from qt_worker import Worker
 import time
 
+
 def print_red(string):
     print(f"\033[91m{string}\033[0m")
 def print_blue(string):
     print(f"\033[44m{string}\033[0m")
+
 
 class GUI_State():
     
@@ -161,8 +168,7 @@ class GUI(QtWidgets.QMainWindow):
         self.ui.listWidget_imgs.clear()
         self.ui.cameraView.clear()
         self.ui.cameraView.setText("No camera / image selected")
-        
-        self.ui.spinBox_img_no.setValue(0)
+        self.ui.spinBox_img_no.setValue(self.ui.settings["img_no_default"])
         self.ui.lineEdit_path.setText(str(os.getcwd()))
         if not self.calibration_settings is None:
             if type(self.calibration_settings) is CharucoCalibrationSettings:
@@ -177,12 +183,12 @@ class GUI(QtWidgets.QMainWindow):
                 raise Exception("Unknown calibration settings type")
             
         else:
-            self.ui.doubleSpinBox_sqare_size.setValue(0.00)
-            self.ui.spinBox_chessboard_no_squares_v.setValue(0)
-            self.ui.spinBox_chessboard_no_squares_h.setValue(0)
-            self.ui.doubleSpinBox_marker_size.setValue(0.00)
-            self.ui.spinBox_charuco_no_markers_v.setValue(0)
-            self.ui.spinBox_charuco_no_markers_h.setValue(0)
+            self.ui.doubleSpinBox_sqare_size.setValue(self.ui.settings["square_size_default"]/10)
+            self.ui.spinBox_chessboard_no_squares_h.setValue(self.ui.settings["board_size_h_default"])
+            self.ui.spinBox_chessboard_no_squares_v.setValue(self.ui.settings["board_size_v_default"])
+            self.ui.doubleSpinBox_marker_size.setValue(self.ui.settings["marker_size_default"]/10)
+            self.ui.spinBox_charuco_no_markers_h.setValue(self.ui.settings["marker_no_h_default"])
+            self.ui.spinBox_charuco_no_markers_v.setValue(self.ui.settings["marker_no_v_default"])
             self.ui.comboBox_marker_dict.setCurrentIndex(0)
             
             self.ui.tabWidget_calibration
@@ -515,8 +521,8 @@ class GUI(QtWidgets.QMainWindow):
     def _slot_pushButton_save_param_pushed(self):
         """Event handler for: pushButton_save_param if pushed
         """
-        path = QtWidgets.QFileDialog.getSaveFileName(self, "Save Parameters", "", "Parameter Files (*.json)")[0]
+        path = QtWidgets.QFileDialog.getSaveFileName(self, "Save Parameters", "", "Parameter Files (*.yaml)")[0]
         # if path doesn't end with .yaml, add it
-        path = path if path.endswith(".json") else path + ".json"
+        path = path if path.endswith(".yaml") else path + ".yaml"
         save_config(self.calibration_parameters, path)
     
