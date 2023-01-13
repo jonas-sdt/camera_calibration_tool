@@ -4,39 +4,25 @@ import yaml
 import time
 import datetime
 import numpy as np
+from dataclasses import dataclass, field
 
 def print_red(string):
     print(f"\033[91m{string}\033[0m")
 def print_blue(string):
     print(f"\033[^4m{string}\033[0m")
 
+@dataclass
 class CharucoCalibrationSettings():
     """ Class to hold the calibration settings for charuco calibration
     """
 
-
-
-    def __init__(self, marker_size: float, marker_no: tuple, marker_dict: cv2.aruco.Dictionary):
-        """ Constructor
-
-        Args:
-            marker_size (float): size of a charuco marker in mm
-            marker_no (tuple): number of markers in the charuco board (h, v)
-            marker_dict (cv2.aruco.Dictionary): opencv charuco marker dictionary
-        """
-
-        if marker_no[0] < 1 or marker_no[1] < 1:
-            raise ValueError("Marker number must be greater than 0")
-        if marker_size < 1:
-            raise ValueError("Marker size must be greater than 1 mm")
-        if marker_dict is None:
-            raise ValueError("Marker dictionary must not be None")
-
-        self.marker_size = marker_size  # in mm
-        self.marker_no = marker_no      # tuple (h, v)
-        # cv2.aruco.Dictionary_get(cv2.aruco.DICT_...)
-        self.marker_dict = marker_dict
-        
+    marker_size:float = 50.0    # in mm
+    marker_no:tuple = (5,5)     # tuple (h, v)
+    marker_dict:int = 0         # marker dictionary index
+    
+    def set_marker_dict(self, marker_dict:int):
+        self._marker_dict = marker_dict
+    
     def get_marker_dict(self):
         markers = { 1: cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50),
                     2: cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_100),
@@ -56,57 +42,36 @@ class CharucoCalibrationSettings():
                     16: cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_7X7_1000)}
         return markers.get(self.marker_dict, "Invalid marker dictionary")
 
+    marker_dict = property(get_marker_dict, set_marker_dict)
 
+@dataclass
 class ChessboardCalibrationSettings():
     """ Class to hold the calibration settings for chessboard calibration
     """
-
-    def __init__(self, square_size: float, board_size: tuple):
-        """ Constructor
-
-        Args:
-            square_size (float): size of a chessboard square in mm
-            board_size (tuple): number of squares in the chessboard (h, v)
-        """
-
-        if board_size[0] < 1 or board_size[1] < 1:
-            raise ValueError("Board size must be greater than 0")
-        if square_size < 1:
-            raise ValueError("Square size must be greater than 1 mm")
-
-        self.square_size = square_size  # in mm
-        self.board_size = board_size    # tuple (h, v)
+    square_size: float = 50.0  # in mm
+    board_size: tuple = (9, 6)  # tuple (h, v)
     
-
-
+@dataclass
 class CalibrationParameters:
     """Class to hold the calibration parameters"""
 
-    def __init__(self):
-        """ Constructor
-        """
-        # initialize everything to 0
+    # * intrinsic parameters
+    # focal length
+    f_x:float = 0
+    f_y:float = 0
+    # pixel size
+    # s_x:float = 0
+    # s_y:float = 0
+    # principal point
+    c_x:float = 0
+    c_y:float = 0
+    # distortion coefficients
+    k_1:float = 0
+    k_2:float = 0
+    p_1:float = 0
+    p_2:float = 0
+    k_3:float = 0
 
-        # * intrinsic parameters
-        # focal length
-        self.f_x = 0
-        self.f_y = 0
-        # pixel size
-        # self.s_x = 0
-        # self.s_y = 0
-        # principal point
-        self.c_x = 0
-        self.c_y = 0
-        # distortion coefficients
-        self.k_1 = 0
-        self.k_2 = 0
-        self.p_1 = 0
-        self.p_2 = 0
-        self.k_3 = 0
-        
-        # * extrinsic parameters
-        # self.R = 0  # rotation matrix
-        # self.t = 0  # translation vector
 
     def to_dict(self):
         """ Converts all parameter to a dictionary
@@ -294,7 +259,7 @@ def _calibrate_charuco(settings: CharucoCalibrationSettings, frames: list) -> Ca
         squaresY=settings.marker_no[1],
         squareLength=settings.marker_size*2,
         markerLength=settings.marker_size,
-        dictionary=settings.get_marker_dict()
+        dictionary=settings.marker_dict
     )
     
     gray_frames = [cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) for frame in frames]
@@ -304,7 +269,7 @@ def _calibrate_charuco(settings: CharucoCalibrationSettings, frames: list) -> Ca
     decimator = 0
     for gray in gray_frames:
 
-        res = cv2.aruco.detectMarkers(gray,settings.get_marker_dict())
+        res = cv2.aruco.detectMarkers(gray,settings.marker_dict)
 
         if len(res[0])>0:
             res2 = cv2.aruco.interpolateCornersCharuco(res[0],res[1],gray,board)
@@ -384,8 +349,8 @@ def _print_charuco_corners(settings: CharucoCalibrationSettings, frame):
 
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     painted_frame = frame.copy()
-    board = cv2.aruco.CharucoBoard_create(settings.marker_no[0], settings.marker_no[1], settings.marker_size*2, settings.marker_size, settings.get_marker_dict())
-    res = cv2.aruco.detectMarkers(gray, settings.get_marker_dict())
+    board = cv2.aruco.CharucoBoard_create(settings.marker_no[0], settings.marker_no[1], settings.marker_size*2, settings.marker_size, settings.marker_dict)
+    res = cv2.aruco.detectMarkers(gray, settings.marker_dict)
     res2 = cv2.aruco.interpolateCornersCharuco(res[0], res[1], gray, board)
     cv2.aruco.drawDetectedCornersCharuco(painted_frame, res2[1], res2[2])
     cv2.aruco.drawDetectedMarkers(painted_frame, res[0], res[1])
