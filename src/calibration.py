@@ -234,7 +234,7 @@ def _calibrate_chessboard(settings: ChessboardCalibrationSettings, frames: list)
 
     else:
         print_red("Calibration failed")
-        raise ValueError("Calibration failed")
+        raise cv2.error
 
 
 def _calibrate_charuco(settings: CharucoCalibrationSettings, frames: list) -> CalibrationParameters:
@@ -323,14 +323,14 @@ def _print_chessboard_corners(settings: ChessboardCalibrationSettings, frame):
     """
 
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    print_frame = frame.copy()
+    painted_frame = frame.copy()
 
     ret, corners = cv2.findChessboardCorners(gray, list((i-1 for i in settings.board_size)), None)
 
     if ret:
-        return cv2.drawChessboardCorners(print_frame, list((i-1 for i in settings.board_size)), corners, ret)
+        return cv2.drawChessboardCorners(painted_frame, list((i-1 for i in settings.board_size)), corners, ret)
     else:
-        raise RuntimeError("Chessboard corners not found")
+        raise cv2.error()
 
 
 def _print_charuco_corners(settings: CharucoCalibrationSettings, frame):
