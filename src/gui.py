@@ -55,6 +55,7 @@ class GUI(QtWidgets.QMainWindow):
         self.frame = None
         self.stop_capture = True
         self.calibration_images = CalibrationImages()
+        self.stop_autocapture = True
         
         # * init Qt
         self.app = QtWidgets.QApplication(sys.argv)
@@ -226,8 +227,6 @@ class GUI(QtWidgets.QMainWindow):
         self.ui.comboBox_camera.setEnabled(False)
         self.ui.lineEdit_path.setEnabled(False)
         self.ui.listWidget_imgs.setEnabled(True)
-        self.ui.progressBar_img_cnt.setEnabled(True)
-        self.ui.progressBar_img_cnt.setMaximum(self.ui.spinBox_img_no.value())
         self.ui.pushButton_camera_search.setEnabled(False)
         self.ui.pushButton_capture.setEnabled(False)
         self.ui.pushButton_delete_all.setEnabled(False)
@@ -240,11 +239,12 @@ class GUI(QtWidgets.QMainWindow):
         self.ui.tabWidget_source.setTabEnabled(1, False)
     
     def _stateAutotimerStopped(self):
-        self.ui.checkBox_save_images.setEnabled(True)
         self.ui.comboBox_camera.setEnabled(True)
+        self.ui.checkBox_save_images.setEnabled(True)
+        if self.ui.checkBox_save_images.isChecked():
+            self.ui.lineEdit_path.setEnabled(True)
         self.ui.lineEdit_path.setEnabled(True)
         self.ui.listWidget_imgs.setEnabled(True)
-        self.ui.progressBar_img_cnt.setEnabled(True)
         self.ui.pushButton_camera_search.setEnabled(True)
         self.ui.pushButton_capture.setEnabled(True)
         self.ui.pushButton_delete_all.setEnabled(True)
@@ -255,6 +255,8 @@ class GUI(QtWidgets.QMainWindow):
         self.ui.spinBox_img_no.setEnabled(True)
         self.ui.tabWidget_calibration.setEnabled(True)
         self.ui.tabWidget_source.setTabEnabled(1, True)
+        if self.ui.listWidget_imgs.count() >= 10:
+            self.ui.pushButton_determ_param.setEnabled(True)
     
     def _stateParametersDetermined(self):
         # fill tableWidget with parameters
@@ -386,14 +388,15 @@ class GUI(QtWidgets.QMainWindow):
         """Event handler for: pushButton_start_autotimer if pushed
         """
         if self.ui.pushButton_start_autotimer.text() == "Start Self Timer":
-            self.stop_capture = False
-            self.gui_states['AutotimerStarted'].activate(reset_fn=None, gui=self)
-            self.capture_thread = Worker(autocapture, self.update_frame, self)
+            self.stop_autocapture = False
+            self.gui_states['AutotimerStarted'].activate(reset_fn=None , gui=self)
+            self.capture_thread = Worker(autocapture, None, self)
             self.threadpool_autotimer = QThreadPool()
             self.threadpool_autotimer.start(self.capture_thread)
         else:
             self.stop_autocapture = True
-            self.previous_state.activate(reset_fn=self._resetGUI, gui=self)
+            # self.previous_state.activate(reset_fn=self._resetGUI, gui=self)
+            self.gui_states['AutotimerStopped'].activate(reset_fn=None, gui=self)
     
     def _slot_pushButton_capture_pushed(self):
         """Event handler for: pushButton_capture if pushed
@@ -405,7 +408,7 @@ class GUI(QtWidgets.QMainWindow):
         self.calibration_images.frames.append(self.frame)
         
         self.ui.listWidget_imgs.addItem("Image " + str(len(self.calibration_images.frames)))
-        
+                
         # check if chessboard corners can be found in image
         if type(self.calibration_settings)==ChessboardCalibrationSettings:
             ret, corners = cv2.findChessboardCorners(self.frame, list((i-1 for i in self.calibration_settings.board_size)))
@@ -417,7 +420,7 @@ class GUI(QtWidgets.QMainWindow):
         if self.ui.checkBox_save_images.isChecked():
             self.calibration_images.save_image(len(self.calibration_images.frames)-1, self.ui.lineEdit_path.text())
             
-        if len(self.calibration_images.frames) > 10 and self.stop_autocapture is not False:
+        if len(self.calibration_images.frames) >= 10 and self.stop_autocapture is not False:
             self.ui.pushButton_determ_param.setEnabled(True)
     
     def _slot_listWidget_imgs_itemClicked(self):

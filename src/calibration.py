@@ -430,14 +430,15 @@ def autocapture(fn_end: callable, kwargs):
     """
     for i in range(kwargs.ui.spinBox_img_no.value()):
         start_time = time.time()
-        kwargs.ui.pushButton_capture.click()
-        kwargs.ui.progressBar_img_cnt.setValue(
-            kwargs.ui.progressBar_img_cnt.value()+1)
-        
         while time.time() - start_time < kwargs.ui.spinBox_delay_seconds.value():
             if kwargs.stop_autocapture:
+                kwargs.gui_states['AutotimerStopped'].activate(reset_fn=None, gui=kwargs)
                 return
+
+        kwargs._slot_pushButton_capture_pushed()
+
     kwargs.gui_states['AutotimerStopped'].activate(reset_fn=None, gui=kwargs)
+    kwargs.stop_autocapture = True
 
 
 def load_imgs(img_paths: list) -> list:

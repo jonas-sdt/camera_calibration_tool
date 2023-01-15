@@ -132,14 +132,6 @@ class Ui_MainWindow(object):
 
         self.gridLayout_11.addWidget(self.label_img_no, 0, 0, 1, 1)
 
-        self.progressBar_img_cnt = QProgressBar(self.groupBox_5)
-        self.progressBar_img_cnt.setObjectName(u"progressBar_img_cnt")
-        self.progressBar_img_cnt.setMaximumSize(QSize(100, 16777215))
-        self.progressBar_img_cnt.setMaximum(20)
-        self.progressBar_img_cnt.setValue(0)
-
-        self.gridLayout_11.addWidget(self.progressBar_img_cnt, 2, 1, 1, 1)
-
         self.spinBox_delay_seconds = QSpinBox(self.groupBox_5)
         self.spinBox_delay_seconds.setObjectName(u"spinBox_delay_seconds")
         self.spinBox_delay_seconds.setMaximumSize(QSize(100, 16777215))
@@ -601,7 +593,6 @@ class Ui_MainWindow(object):
         self.pushButton_start_autotimer.setText(QCoreApplication.translate("MainWindow", u"Start Self Timer", None))
         self.label_delay_seconds.setText(QCoreApplication.translate("MainWindow", u"Delay:", None))
         self.label_img_no.setText(QCoreApplication.translate("MainWindow", u"Number of Images:", None))
-        self.progressBar_img_cnt.setFormat(QCoreApplication.translate("MainWindow", u"%v", None))
 #if QT_CONFIG(statustip)
         self.spinBox_delay_seconds.setStatusTip(QCoreApplication.translate("MainWindow", u"Sleep time between images", None))
 #endif // QT_CONFIG(statustip)

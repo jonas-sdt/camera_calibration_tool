@@ -1,5 +1,5 @@
 from PySide2.QtCore import QRunnable, Slot
-
+import traceback
 import sys
 
 class Worker(QRunnable):
@@ -39,7 +39,7 @@ class Worker(QRunnable):
             result = self.fn(*self.args, **self.kwargs)
         except:
             exctype, value = sys.exc_info()[:2]
-            # self.signals.error.emit((exctype, value, traceback.format_exc()))
+            self.signals.error.emit((exctype, value, traceback.format_exc()))
         else:
             pass
             # self.signals.result.emit(result)  # Return the result of the processing
